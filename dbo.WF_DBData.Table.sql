@@ -1,0 +1,31 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[WF_DBData](
+	[DBDataID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](50) NULL,
+	[DataSQL] [nvarchar](4000) NULL,
+	[IsProcedure] [bit] NOT NULL,
+	[FromERP] [bit] NOT NULL,
+	[IsList] [bit] NOT NULL,
+	[IsErpAFSCall] [bit] NOT NULL,
+	[AFSDllName] [nvarchar](150) NULL,
+	[AFSFunctionName] [nvarchar](150) NULL,
+	[AFSParameters] [nvarchar](250) NULL,
+ CONSTRAINT [PK_WF_DBData] PRIMARY KEY CLUSTERED 
+(
+	[DBDataID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[WF_DBData] ADD  CONSTRAINT [DF_Table_1_DVUFARIsSp]  DEFAULT ((0)) FOR [IsProcedure]
+GO
+ALTER TABLE [dbo].[WF_DBData] ADD  CONSTRAINT [DF_Table_1_DVUFARIsERP]  DEFAULT ((0)) FOR [FromERP]
+GO
+ALTER TABLE [dbo].[WF_DBData] ADD  CONSTRAINT [DF_Table_1_DVUFARIsList]  DEFAULT ((0)) FOR [IsList]
+GO
+ALTER TABLE [dbo].[WF_DBData] ADD  CONSTRAINT [DF_WF_DBData_IsErpAFSCall]  DEFAULT ((0)) FOR [IsErpAFSCall]
+GO

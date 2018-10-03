@@ -1,0 +1,15 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spelogICDCFSsDelete]
+  @Original_ICDCFSID Int,
+  @RowCount int = null OUTPUT
+  AS
+  DELETE [ELOG_ICDCFSs]
+  WHERE
+  [ELOG_ICDCFSs].[ICDCFSID] = @Original_ICDCFSID
+  SET @RowCount = @@RowCount
+GO

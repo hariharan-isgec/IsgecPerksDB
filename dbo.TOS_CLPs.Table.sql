@@ -1,0 +1,88 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TOS_CLPs](
+	[ProjectID] [nvarchar](6) NOT NULL,
+	[CLPID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](250) NOT NULL,
+	[Quantity] [nvarchar](100) NULL,
+	[Sequence] [int] NULL,
+	[DisplayType] [nvarchar](50) NULL,
+	[engTaskID] [int] NULL,
+	[ordTaskID] [int] NULL,
+	[desTaskID] [int] NULL,
+	[ereTaskID] [int] NULL,
+	[ioTaskID] [int] NULL,
+	[recTaskID] [int] NULL,
+	[ad1TaskID] [int] NULL,
+	[ad2TaskID] [int] NULL,
+	[ad3TaskID] [int] NULL,
+	[ad4TaskID] [int] NULL,
+	[Active] [bit] NOT NULL,
+ CONSTRAINT [PK_TOS_CLPs] PRIMARY KEY CLUSTERED 
+(
+	[ProjectID] ASC,
+	[CLPID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ad1TaskID] FOREIGN KEY([ProjectID], [ad1TaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ad1TaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ad2TaskID] FOREIGN KEY([ProjectID], [ad2TaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ad2TaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ad3TaskID] FOREIGN KEY([ProjectID], [ad3TaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ad3TaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ad4TaskID] FOREIGN KEY([ProjectID], [ad4TaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ad4TaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_desTaskID] FOREIGN KEY([ProjectID], [desTaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_desTaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_engTaskID] FOREIGN KEY([ProjectID], [engTaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_engTaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ereTaskID] FOREIGN KEY([ProjectID], [ereTaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ereTaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ioTaskID] FOREIGN KEY([ProjectID], [ioTaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ioTaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ordTaskID] FOREIGN KEY([ProjectID], [ordTaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ordTaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_ProjectID] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[TOS_Projects] ([ProjectID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_ProjectID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs]  WITH CHECK ADD  CONSTRAINT [FK_CLPs_recTaskID] FOREIGN KEY([ProjectID], [recTaskID])
+REFERENCES [dbo].[TOS_Tasks] ([ProjectID], [TaskID])
+GO
+ALTER TABLE [dbo].[TOS_CLPs] CHECK CONSTRAINT [FK_CLPs_recTaskID]
+GO
+ALTER TABLE [dbo].[TOS_CLPs] ADD  CONSTRAINT [DF_TOS_CLPs_Active]  DEFAULT ((1)) FOR [Active]
+GO

@@ -1,0 +1,26 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[ATH_Handle](
+	[Attachment_Handle] [varchar](200) NOT NULL,
+	[DBID] [varchar](50) NOT NULL,
+	[TableName] [varchar](50) NOT NULL,
+	[AccessIndex] [varchar](50) NOT NULL,
+	[TableDescription] [varchar](200) NULL,
+	[Remarks] [varchar](max) NULL,
+ CONSTRAINT [PK_ATH_Handle] PRIMARY KEY CLUSTERED 
+(
+	[Attachment_Handle] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+ALTER TABLE [dbo].[ATH_Handle]  WITH CHECK ADD FOREIGN KEY([DBID])
+REFERENCES [dbo].[ATH_Database] ([DBID])
+GO

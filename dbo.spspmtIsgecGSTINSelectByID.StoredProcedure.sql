@@ -1,0 +1,16 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spspmtIsgecGSTINSelectByID]
+  @LoginID NVarChar(8),
+  @GSTID Int 
+  AS
+  SELECT
+    [SPMT_IsgecGSTIN].*  
+  FROM [SPMT_IsgecGSTIN] 
+  WHERE
+  [SPMT_IsgecGSTIN].[GSTID] = @GSTID
+GO

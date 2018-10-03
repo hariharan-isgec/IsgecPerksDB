@@ -1,0 +1,18 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TMP_Showme](
+	[srno] [int] IDENTITY(1,1) NOT NULL,
+	[description] [nvarchar](4000) NULL,
+	[HostName] [nvarchar](1000) NULL,
+	[IPAddress] [nvarchar](500) NULL,
+	[UserAgent] [nvarchar](500) NULL,
+ CONSTRAINT [PK_TMP_Showme] PRIMARY KEY CLUSTERED 
+(
+	[srno] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO

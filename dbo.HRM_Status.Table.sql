@@ -1,0 +1,20 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HRM_Status](
+	[StatusID] [nvarchar](2) NOT NULL,
+	[Description] [nvarchar](30) NOT NULL,
+	[Sequence] [int] NOT NULL,
+ CONSTRAINT [PK_HRM_Status] PRIMARY KEY CLUSTERED 
+(
+	[StatusID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[HRM_Status] ADD  CONSTRAINT [DF_HRM_Status_Description]  DEFAULT ('') FOR [Description]
+GO
+ALTER TABLE [dbo].[HRM_Status] ADD  CONSTRAINT [DF_HRM_Status_Sequence]  DEFAULT ((0)) FOR [Sequence]
+GO

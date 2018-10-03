@@ -1,0 +1,11 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tos_tmp](
+	[TID] [int] NULL,
+	[DEPT] [nvarchar](10) NULL
+) ON [PRIMARY]
+GO

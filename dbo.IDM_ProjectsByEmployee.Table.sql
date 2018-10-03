@@ -1,0 +1,26 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[IDM_ProjectsByEmployee](
+	[ProjectID] [nvarchar](6) NOT NULL,
+	[CardNo] [nvarchar](8) NOT NULL,
+ CONSTRAINT [PK_IDM_ProjectsByEmployee] PRIMARY KEY CLUSTERED 
+(
+	[ProjectID] ASC,
+	[CardNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[IDM_ProjectsByEmployee]  WITH CHECK ADD  CONSTRAINT [FK_PRE_CardNo] FOREIGN KEY([CardNo])
+REFERENCES [dbo].[HRM_Employees] ([CardNo])
+GO
+ALTER TABLE [dbo].[IDM_ProjectsByEmployee] CHECK CONSTRAINT [FK_PRE_CardNo]
+GO
+ALTER TABLE [dbo].[IDM_ProjectsByEmployee]  WITH CHECK ADD  CONSTRAINT [FK_PRE_ProjectID] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[IDM_Projects] ([ProjectID])
+GO
+ALTER TABLE [dbo].[IDM_ProjectsByEmployee] CHECK CONSTRAINT [FK_PRE_ProjectID]
+GO

@@ -1,0 +1,26 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EITL_ProjectWiseUser](
+	[SerialNo] [bigint] IDENTITY(1,1) NOT NULL,
+	[UserID] [nvarchar](8) NULL,
+	[ProjectID] [nvarchar](6) NULL,
+ CONSTRAINT [PK_EITL_ProjectWiseUser] PRIMARY KEY CLUSTERED 
+(
+	[SerialNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[EITL_ProjectWiseUser]  WITH CHECK ADD  CONSTRAINT [FK_EITL_ProjectWiseUser_ProjectID] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[IDM_Projects] ([ProjectID])
+GO
+ALTER TABLE [dbo].[EITL_ProjectWiseUser] CHECK CONSTRAINT [FK_EITL_ProjectWiseUser_ProjectID]
+GO
+ALTER TABLE [dbo].[EITL_ProjectWiseUser]  WITH CHECK ADD  CONSTRAINT [FK_EITL_ProjectWiseUser_UserID] FOREIGN KEY([UserID])
+REFERENCES [dbo].[aspnet_users] ([LoginID])
+GO
+ALTER TABLE [dbo].[EITL_ProjectWiseUser] CHECK CONSTRAINT [FK_EITL_ProjectWiseUser_UserID]
+GO

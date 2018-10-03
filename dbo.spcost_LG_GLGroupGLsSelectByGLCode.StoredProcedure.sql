@@ -1,0 +1,21 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create PROCEDURE [dbo].[spcost_LG_GLGroupGLsSelectByGLCode]
+  @LoginID NVarChar(8),
+  @GLCode NVarChar(10) 
+  AS
+  SELECT   
+    [COST_GLGroupGLs].* ,
+    [COST_GLGroups1].[GLGroupDescriptions] AS COST_GLGroups1_GLGroupDescriptions,
+    [COST_ERPGLCodes2].[GLDescription] AS COST_ERPGLCodes2_GLDescription 
+  FROM [COST_GLGroupGLs] 
+  INNER JOIN [COST_GLGroups] AS [COST_GLGroups1]
+    ON [COST_GLGroupGLs].[GLGroupID] = [COST_GLGroups1].[GLGroupID]
+  INNER JOIN [COST_ERPGLCodes] AS [COST_ERPGLCodes2]
+    ON [COST_GLGroupGLs].[GLCode] = [COST_ERPGLCodes2].[GLCode]
+  WHERE  [COST_GLGroupGLs].[GLCode] = @GLCode
+GO

@@ -1,0 +1,29 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SYS_VRRoleByEmployee](
+	[RecordID] [int] IDENTITY(1,1) NOT NULL,
+	[VRRoleID] [int] NOT NULL,
+	[ApplicationID] [int] NOT NULL,
+	[UserName] [nvarchar](20) NOT NULL,
+ CONSTRAINT [PK_SYS_RoleByEmployee] PRIMARY KEY CLUSTERED 
+(
+	[RecordID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[SYS_VRRoleByEmployee]  WITH CHECK ADD  CONSTRAINT [FK_SYS_RoleByEmployee_SYS_Roles] FOREIGN KEY([VRRoleID])
+REFERENCES [dbo].[SYS_VRRoles] ([VRRoleID])
+GO
+ALTER TABLE [dbo].[SYS_VRRoleByEmployee] CHECK CONSTRAINT [FK_SYS_RoleByEmployee_SYS_Roles]
+GO
+ALTER TABLE [dbo].[SYS_VRRoleByEmployee]  WITH CHECK ADD  CONSTRAINT [FK_SYS_VRRoleByEmployee_SYS_Applications] FOREIGN KEY([ApplicationID])
+REFERENCES [dbo].[SYS_Applications] ([ApplicationID])
+GO
+ALTER TABLE [dbo].[SYS_VRRoleByEmployee] CHECK CONSTRAINT [FK_SYS_VRRoleByEmployee_SYS_Applications]
+GO
+ALTER TABLE [dbo].[SYS_VRRoleByEmployee] ADD  CONSTRAINT [DF_SYS_VRRoleByEmployee_UserName]  DEFAULT ('') FOR [UserName]
+GO

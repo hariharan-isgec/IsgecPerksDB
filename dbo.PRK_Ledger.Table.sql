@@ -1,0 +1,107 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PRK_Ledger](
+	[DocumentID] [int] IDENTITY(1,1) NOT NULL,
+	[EmployeeID] [int] NOT NULL,
+	[PerkID] [int] NOT NULL,
+	[TranType] [nvarchar](3) NOT NULL,
+	[TranDate] [datetime] NOT NULL,
+	[FinYear] [int] NOT NULL,
+	[Value] [decimal](10, 2) NOT NULL,
+	[UOM] [nvarchar](5) NOT NULL,
+	[Amount] [decimal](10, 2) NOT NULL,
+	[Remarks] [nvarchar](500) NOT NULL,
+	[CreatedBy] [int] NOT NULL,
+	[ParentDocumentID] [int] NOT NULL,
+	[ApplicationID] [int] NOT NULL,
+	[PostedInBaaN] [bit] NOT NULL,
+	[PostedOn] [datetime] NULL,
+	[PostedBy] [int] NULL,
+	[BatchNo] [nvarchar](6) NOT NULL,
+	[VoucherNo] [nvarchar](8) NOT NULL,
+	[VoucherLineNo] [nvarchar](10) NOT NULL,
+ CONSTRAINT [PK_PRK_Ledger] PRIMARY KEY CLUSTERED 
+(
+	[DocumentID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_PRK_Ledger] ON [dbo].[PRK_Ledger] 
+(
+	[FinYear] ASC,
+	[TranType] ASC,
+	[TranDate] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_PRK_Ledger_1] ON [dbo].[PRK_Ledger] 
+(
+	[FinYear] ASC,
+	[PostedInBaaN] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_PRK_Ledger_2] ON [dbo].[PRK_Ledger] 
+(
+	[EmployeeID] ASC,
+	[PerkID] ASC,
+	[FinYear] ASC,
+	[TranDate] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_PRK_Ledger_3] ON [dbo].[PRK_Ledger] 
+(
+	[ApplicationID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PRK_Ledger]  WITH CHECK ADD  CONSTRAINT [FK_PRK_Ledger_PRK_Employees] FOREIGN KEY([EmployeeID])
+REFERENCES [dbo].[PRK_Employees] ([EmployeeID])
+GO
+ALTER TABLE [dbo].[PRK_Ledger] CHECK CONSTRAINT [FK_PRK_Ledger_PRK_Employees]
+GO
+ALTER TABLE [dbo].[PRK_Ledger]  WITH CHECK ADD  CONSTRAINT [FK_PRK_Ledger_PRK_Employees1] FOREIGN KEY([CreatedBy])
+REFERENCES [dbo].[PRK_Employees] ([EmployeeID])
+GO
+ALTER TABLE [dbo].[PRK_Ledger] CHECK CONSTRAINT [FK_PRK_Ledger_PRK_Employees1]
+GO
+ALTER TABLE [dbo].[PRK_Ledger]  WITH CHECK ADD  CONSTRAINT [FK_PRK_Ledger_PRK_Employees2] FOREIGN KEY([PostedBy])
+REFERENCES [dbo].[PRK_Employees] ([EmployeeID])
+GO
+ALTER TABLE [dbo].[PRK_Ledger] CHECK CONSTRAINT [FK_PRK_Ledger_PRK_Employees2]
+GO
+ALTER TABLE [dbo].[PRK_Ledger]  WITH CHECK ADD  CONSTRAINT [FK_PRK_Ledger_PRK_FinYears] FOREIGN KEY([FinYear])
+REFERENCES [dbo].[PRK_FinYears] ([FinYear])
+GO
+ALTER TABLE [dbo].[PRK_Ledger] CHECK CONSTRAINT [FK_PRK_Ledger_PRK_FinYears]
+GO
+ALTER TABLE [dbo].[PRK_Ledger]  WITH CHECK ADD  CONSTRAINT [FK_PRK_Ledger_PRK_Perks] FOREIGN KEY([PerkID])
+REFERENCES [dbo].[PRK_Perks] ([PerkID])
+GO
+ALTER TABLE [dbo].[PRK_Ledger] CHECK CONSTRAINT [FK_PRK_Ledger_PRK_Perks]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_TranType]  DEFAULT ('PMT') FOR [TranType]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_TranDate]  DEFAULT (getdate()) FOR [TranDate]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_Value]  DEFAULT ((0)) FOR [Value]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_UOM]  DEFAULT ('Rs.') FOR [UOM]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_Amount]  DEFAULT ((0)) FOR [Amount]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_Remarks]  DEFAULT ('') FOR [Remarks]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_ParentDocumentID]  DEFAULT ((0)) FOR [ParentDocumentID]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_ApplicationID]  DEFAULT ((0)) FOR [ApplicationID]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_PostedInBaaN]  DEFAULT ((0)) FOR [PostedInBaaN]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_BN_Batch]  DEFAULT ('') FOR [BatchNo]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_VoucherNo]  DEFAULT ('') FOR [VoucherNo]
+GO
+ALTER TABLE [dbo].[PRK_Ledger] ADD  CONSTRAINT [DF_PRK_Ledger_LineNo]  DEFAULT ('') FOR [VoucherLineNo]
+GO

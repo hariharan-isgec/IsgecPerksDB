@@ -1,0 +1,30 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GRT_Greetings](
+	[UserID] [nvarchar](8) NOT NULL,
+	[SerialNo] [int] IDENTITY(1,1) NOT NULL,
+	[ToEmailID] [nvarchar](100) NOT NULL,
+	[ToName] [nvarchar](100) NULL,
+	[SentOn] [datetime] NULL,
+	[UsingGreetingID] [int] NULL,
+ CONSTRAINT [PK_GRT_Greetings] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC,
+	[SerialNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[GRT_Greetings]  WITH CHECK ADD  CONSTRAINT [FK_GRT_GreetingID] FOREIGN KEY([UsingGreetingID])
+REFERENCES [dbo].[GRT_Config] ([GreetingID])
+GO
+ALTER TABLE [dbo].[GRT_Greetings] CHECK CONSTRAINT [FK_GRT_GreetingID]
+GO
+ALTER TABLE [dbo].[GRT_Greetings]  WITH CHECK ADD  CONSTRAINT [FK_GRT_UserID] FOREIGN KEY([UserID])
+REFERENCES [dbo].[HRM_Employees] ([CardNo])
+GO
+ALTER TABLE [dbo].[GRT_Greetings] CHECK CONSTRAINT [FK_GRT_UserID]
+GO

@@ -1,0 +1,16 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spspmtERPUnitsSelectByID]
+  @LoginID NVarChar(8),
+  @UOM NVarChar(3) 
+  AS
+  SELECT
+    [SPMT_ERPUnits].*  
+  FROM [SPMT_ERPUnits] 
+  WHERE
+  [SPMT_ERPUnits].[UOM] = @UOM
+GO

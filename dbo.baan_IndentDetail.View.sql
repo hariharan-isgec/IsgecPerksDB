@@ -1,0 +1,87 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE view [dbo].[baan_IndentDetail]
+as
+SELECT  
+ProjectCode,
+IndentNo,
+PRPNo,
+Item,
+BudgetedPriceBasic,
+--ExciseDuty,       
+--SalesTax,         
+--OtherCharges1,    
+--OtherCharges2,   
+--Octroi,            
+Amount, 
+PlanDeliveryDate,
+PlanOrderDate,
+Element,              
+Quantity,             
+OrderNo,           
+OrderLineNo, 
+ItemGroup,          
+IndentType,         
+Cancelled,           
+CancelledOrder,     
+CancelledLine,      
+IndentLine,         
+TecVetIJTDesign,    
+TecVetMaterials,        
+TecVetClient,           
+MfgClrIJTDesign,       
+MfgClrMaterials,       
+MfgClrClient,           
+referenceproject,
+ReferencePO,      
+IndentRev,          
+PlanDeliveryDateFrom,      
+TecVetProjects,         
+TecVetNotrequired,     
+MfgClrProjects
+FROM 
+OPENQUERY([BAAN],
+'SELECT 
+t$cprj as ProjectCode,
+t$srno as IndentNo,
+t$orno as PRPNo,
+t$item as Item,
+t$pric as BudgetedPriceBasic,
+--t$exc.ppu as ExciseDuty,       
+--t$tax.ppu as SalesTax,         
+--t$toc.cd as OtherCharges1,    
+--t$ntoc.cd as OtherCharges2,   
+--t$oct.ppu as Octroi,            
+t$amoc as Amount,               
+to_char(t$pddt) as PlanDeliveryDate,    
+to_char(t$podt) as PlanOrderDate,       
+t$cspa as Element,              
+t$oqan as Quantity,             
+t$ordno as OrderNo,           
+t$pono  as OrderLineNo, 
+t$citg  as ItemGroup,          
+t$indt  as IndentType,         
+t$cncl  as Cancelled,           
+t$lorn  as CancelledOrder,     
+t$lpon  as CancelledLine,      
+t$line  as IndentLine,         
+t$tecdes as TecVetIJTDesign,    
+t$tecmat as TecVetMaterials,        
+t$teccli as TecVetClient,           
+t$cledes as MfgClrIJTDesign,       
+t$clemat as MfgClrMaterials,       
+t$clecli as MfgClrClient,           
+t$pstprj as referenceproject,
+t$pstpur as ReferencePO,      
+t$indrv as IndentRev,          
+to_char(t$pddt1) as PlanDeliveryDateFrom,      
+t$tecprj as TecVetProjects,         
+t$tecnot as TecVetNotrequired,     
+t$cleprj as MfgClrProjects
+FROM baandb.ttppss933100
+') ;
+GO

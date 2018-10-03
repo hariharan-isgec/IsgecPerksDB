@@ -1,0 +1,29 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SYS_VRRoles](
+	[VRRoleID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](50) NOT NULL,
+	[VRRoleType] [nvarchar](1) NOT NULL,
+	[ApplicationID] [int] NOT NULL,
+	[DefaultRole] [bit] NOT NULL,
+ CONSTRAINT [PK_SYS_Roles] PRIMARY KEY CLUSTERED 
+(
+	[VRRoleID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[SYS_VRRoles]  WITH CHECK ADD  CONSTRAINT [FK_SYS_VRRoles_SYS_Applications] FOREIGN KEY([ApplicationID])
+REFERENCES [dbo].[SYS_Applications] ([ApplicationID])
+GO
+ALTER TABLE [dbo].[SYS_VRRoles] CHECK CONSTRAINT [FK_SYS_VRRoles_SYS_Applications]
+GO
+ALTER TABLE [dbo].[SYS_VRRoles] ADD  CONSTRAINT [DF_SYS_Roles_Description]  DEFAULT ('') FOR [Description]
+GO
+ALTER TABLE [dbo].[SYS_VRRoles] ADD  CONSTRAINT [DF_SYS_VRRoles_VRRoleType]  DEFAULT ('D') FOR [VRRoleType]
+GO
+ALTER TABLE [dbo].[SYS_VRRoles] ADD  CONSTRAINT [DF_SYS_VRRoles_DefaultRole]  DEFAULT ((0)) FOR [DefaultRole]
+GO

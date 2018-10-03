@@ -1,0 +1,80 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ATN_LeaveLedger](
+	[RecordID] [int] IDENTITY(1,1) NOT NULL,
+	[TranType] [nvarchar](3) NOT NULL,
+	[TranDate] [datetime] NOT NULL,
+	[CardNo] [nvarchar](8) NOT NULL,
+	[LeaveTypeID] [nvarchar](2) NOT NULL,
+	[Days] [decimal](6, 2) NOT NULL,
+	[InProcessDays] [decimal](6, 2) NOT NULL,
+	[FinYear] [nvarchar](4) NOT NULL,
+	[ApplHeaderID] [int] NULL,
+	[ApplDetailID] [int] NULL,
+	[SubTranType] [nvarchar](3) NULL,
+	[Remarks] [nvarchar](256) NULL,
+	[CreatedBy] [nvarchar](8) NULL,
+	[CreatedOn] [datetime] NULL,
+ CONSTRAINT [PK_ATN_LeaveLedger] PRIMARY KEY CLUSTERED 
+(
+	[RecordID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_ATN_LeaveLedger] ON [dbo].[ATN_LeaveLedger] 
+(
+	[TranType] ASC,
+	[SubTranType] ASC,
+	[FinYear] ASC,
+	[LeaveTypeID] ASC,
+	[CardNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_ATN_LeaveLedger_1] ON [dbo].[ATN_LeaveLedger] 
+(
+	[LeaveTypeID] ASC,
+	[CardNo] ASC,
+	[FinYear] ASC,
+	[ApplDetailID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_ATN_LeaveLedger_2] ON [dbo].[ATN_LeaveLedger] 
+(
+	[ApplDetailID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_ATN_LeaveLedger_3] ON [dbo].[ATN_LeaveLedger] 
+(
+	[ApplHeaderID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger]  WITH CHECK ADD  CONSTRAINT [FK_ATN_LeaveLedger_ATN_FinYear] FOREIGN KEY([FinYear])
+REFERENCES [dbo].[ATN_FinYear] ([FinYear])
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger] CHECK CONSTRAINT [FK_ATN_LeaveLedger_ATN_FinYear]
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger]  WITH CHECK ADD  CONSTRAINT [FK_ATN_LeaveLedger_ATN_LeaveTypes] FOREIGN KEY([LeaveTypeID])
+REFERENCES [dbo].[ATN_LeaveTypes] ([LeaveTypeID])
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger] CHECK CONSTRAINT [FK_ATN_LeaveLedger_ATN_LeaveTypes]
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger]  WITH CHECK ADD  CONSTRAINT [FK_ATN_LeaveLedger_ATN_TranType] FOREIGN KEY([TranType])
+REFERENCES [dbo].[ATN_TranType] ([TranType])
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger] CHECK CONSTRAINT [FK_ATN_LeaveLedger_ATN_TranType]
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger]  WITH CHECK ADD  CONSTRAINT [FK_ATN_LeaveLedger_HRM_Employees] FOREIGN KEY([CardNo])
+REFERENCES [dbo].[HRM_Employees] ([CardNo])
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger] CHECK CONSTRAINT [FK_ATN_LeaveLedger_HRM_Employees]
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger] ADD  CONSTRAINT [DF_ATN_LeaveLedger_TranDate]  DEFAULT (getdate()) FOR [TranDate]
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger] ADD  CONSTRAINT [DF_ATN_LeaveLedger_Days]  DEFAULT ((0)) FOR [Days]
+GO
+ALTER TABLE [dbo].[ATN_LeaveLedger] ADD  CONSTRAINT [DF_ATN_LeaveLedger_Days1]  DEFAULT ((0)) FOR [InProcessDays]
+GO

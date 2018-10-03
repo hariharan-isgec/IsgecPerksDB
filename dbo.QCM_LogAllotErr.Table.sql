@@ -1,0 +1,20 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[QCM_LogAllotErr](
+	[UserID] [nvarchar](8) NOT NULL,
+	[RequestID] [int] NOT NULL,
+	[LoggedOn] [datetime] NOT NULL,
+	[ErrMessage] [nvarchar](4000) NULL,
+	[MailSrNo] [int] NULL,
+ CONSTRAINT [PK_QCM_LogAllotErr] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC,
+	[RequestID] ASC,
+	[LoggedOn] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO

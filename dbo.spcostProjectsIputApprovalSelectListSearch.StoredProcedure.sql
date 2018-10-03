@@ -1,0 +1,154 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spcostProjectsIputApprovalSelectListSearch]
+  @LoginID NVarChar(8),
+  @StartRowIndex int,
+  @MaximumRows int,
+  @KeyWord VarChar(250),
+  @StatusID Int,
+  @OrderBy NVarChar(50),
+  @RecordCount Int = 0 OUTPUT
+  AS
+  BEGIN
+    DECLARE @KeyWord1 VarChar(260)
+    SET @KeyWord1 = '%' + LOWER(@KeyWord) + '%'
+  CREATE TABLE #PageIndex (
+  IndexID INT IDENTITY (1, 1) NOT NULL
+ ,ProjectGroupID Int NOT NULL
+ ,FinYear Int NOT NULL
+ ,Quarter Int NOT NULL
+  )
+  INSERT INTO #PageIndex (ProjectGroupID, FinYear, Quarter)
+  SELECT [COST_ProjectsInput].[ProjectGroupID], [COST_ProjectsInput].[FinYear], [COST_ProjectsInput].[Quarter] FROM [COST_ProjectsInput]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users1]
+    ON [COST_ProjectsInput].[CreatedBy] = [aspnet_users1].[LoginID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users2]
+    ON [COST_ProjectsInput].[ApprovedBy] = [aspnet_users2].[LoginID]
+  INNER JOIN [COST_FinYear] AS [COST_FinYear3]
+    ON [COST_ProjectsInput].[FinYear] = [COST_FinYear3].[FinYear]
+  INNER JOIN [COST_ProjectGroups] AS [COST_ProjectGroups4]
+    ON [COST_ProjectsInput].[ProjectGroupID] = [COST_ProjectGroups4].[ProjectGroupID]
+  LEFT OUTER JOIN [COST_ProjectInputStatus] AS [COST_ProjectInputStatus5]
+    ON [COST_ProjectsInput].[StatusID] = [COST_ProjectInputStatus5].[StatusID]
+  INNER JOIN [COST_Quarters] AS [COST_Quarters6]
+    ON [COST_ProjectsInput].[Quarter] = [COST_Quarters6].[Quarter]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]
+    ON [COST_ProjectsInput].[ReceivedBy] = [aspnet_users7].[LoginID]
+ WHERE  
+      [COST_ProjectsInput].[StatusID] = (@StatusID)
+   AND ( 
+         STR(ISNULL([COST_ProjectsInput].[ProjectGroupID], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[FinYear], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[Quarter], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[ProjectRevenue], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[ProjectMargin], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[ExportIncentive], 0)) LIKE @KeyWord1
+     OR LOWER(ISNULL([COST_ProjectsInput].[Remarks],'')) LIKE @KeyWord1
+     OR LOWER(ISNULL([COST_ProjectsInput].[ApprovedBy],'')) LIKE @KeyWord1
+     OR LOWER(ISNULL([COST_ProjectsInput].[ApproverRemarks],'')) LIKE @KeyWord1
+     OR LOWER(ISNULL([COST_ProjectsInput].[ReceiverRemarks],'')) LIKE @KeyWord1
+     OR LOWER(ISNULL([COST_ProjectsInput].[ReceivedBy],'')) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[ProjectMarginByAC], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[GroupOrderValue], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[ProjectRevenueByAC], 0)) LIKE @KeyWord1
+     OR LOWER(ISNULL([COST_ProjectsInput].[CreatedBy],'')) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[ExportIncentiveByAC], 0)) LIKE @KeyWord1
+     OR STR(ISNULL([COST_ProjectsInput].[StatusID], 0)) LIKE @KeyWord1
+   ) 
+  ORDER BY
+     CASE @OrderBy WHEN 'ProjectGroupID' THEN [COST_ProjectsInput].[ProjectGroupID] END,
+     CASE @OrderBy WHEN 'ProjectGroupID DESC' THEN [COST_ProjectsInput].[ProjectGroupID] END DESC,
+     CASE @OrderBy WHEN 'FinYear' THEN [COST_ProjectsInput].[FinYear] END,
+     CASE @OrderBy WHEN 'FinYear DESC' THEN [COST_ProjectsInput].[FinYear] END DESC,
+     CASE @OrderBy WHEN 'Quarter' THEN [COST_ProjectsInput].[Quarter] END,
+     CASE @OrderBy WHEN 'Quarter DESC' THEN [COST_ProjectsInput].[Quarter] END DESC,
+     CASE @OrderBy WHEN 'ProjectRevenue' THEN [COST_ProjectsInput].[ProjectRevenue] END,
+     CASE @OrderBy WHEN 'ProjectRevenue DESC' THEN [COST_ProjectsInput].[ProjectRevenue] END DESC,
+     CASE @OrderBy WHEN 'ProjectMargin' THEN [COST_ProjectsInput].[ProjectMargin] END,
+     CASE @OrderBy WHEN 'ProjectMargin DESC' THEN [COST_ProjectsInput].[ProjectMargin] END DESC,
+     CASE @OrderBy WHEN 'ExportIncentive' THEN [COST_ProjectsInput].[ExportIncentive] END,
+     CASE @OrderBy WHEN 'ExportIncentive DESC' THEN [COST_ProjectsInput].[ExportIncentive] END DESC,
+     CASE @OrderBy WHEN 'Remarks' THEN [COST_ProjectsInput].[Remarks] END,
+     CASE @OrderBy WHEN 'Remarks DESC' THEN [COST_ProjectsInput].[Remarks] END DESC,
+     CASE @OrderBy WHEN 'ApprovedOn' THEN [COST_ProjectsInput].[ApprovedOn] END,
+     CASE @OrderBy WHEN 'ApprovedOn DESC' THEN [COST_ProjectsInput].[ApprovedOn] END DESC,
+     CASE @OrderBy WHEN 'ApprovedBy' THEN [COST_ProjectsInput].[ApprovedBy] END,
+     CASE @OrderBy WHEN 'ApprovedBy DESC' THEN [COST_ProjectsInput].[ApprovedBy] END DESC,
+     CASE @OrderBy WHEN 'ApproverRemarks' THEN [COST_ProjectsInput].[ApproverRemarks] END,
+     CASE @OrderBy WHEN 'ApproverRemarks DESC' THEN [COST_ProjectsInput].[ApproverRemarks] END DESC,
+     CASE @OrderBy WHEN 'ReceiverRemarks' THEN [COST_ProjectsInput].[ReceiverRemarks] END,
+     CASE @OrderBy WHEN 'ReceiverRemarks DESC' THEN [COST_ProjectsInput].[ReceiverRemarks] END DESC,
+     CASE @OrderBy WHEN 'ReceivedOn' THEN [COST_ProjectsInput].[ReceivedOn] END,
+     CASE @OrderBy WHEN 'ReceivedOn DESC' THEN [COST_ProjectsInput].[ReceivedOn] END DESC,
+     CASE @OrderBy WHEN 'ReceivedBy' THEN [COST_ProjectsInput].[ReceivedBy] END,
+     CASE @OrderBy WHEN 'ReceivedBy DESC' THEN [COST_ProjectsInput].[ReceivedBy] END DESC,
+     CASE @OrderBy WHEN 'CreatedOn' THEN [COST_ProjectsInput].[CreatedOn] END,
+     CASE @OrderBy WHEN 'CreatedOn DESC' THEN [COST_ProjectsInput].[CreatedOn] END DESC,
+     CASE @OrderBy WHEN 'ProjectMarginByAC' THEN [COST_ProjectsInput].[ProjectMarginByAC] END,
+     CASE @OrderBy WHEN 'ProjectMarginByAC DESC' THEN [COST_ProjectsInput].[ProjectMarginByAC] END DESC,
+     CASE @OrderBy WHEN 'GroupOrderValue' THEN [COST_ProjectsInput].[GroupOrderValue] END,
+     CASE @OrderBy WHEN 'GroupOrderValue DESC' THEN [COST_ProjectsInput].[GroupOrderValue] END DESC,
+     CASE @OrderBy WHEN 'ProjectRevenueByAC' THEN [COST_ProjectsInput].[ProjectRevenueByAC] END,
+     CASE @OrderBy WHEN 'ProjectRevenueByAC DESC' THEN [COST_ProjectsInput].[ProjectRevenueByAC] END DESC,
+     CASE @OrderBy WHEN 'CreatedBy' THEN [COST_ProjectsInput].[CreatedBy] END,
+     CASE @OrderBy WHEN 'CreatedBy DESC' THEN [COST_ProjectsInput].[CreatedBy] END DESC,
+     CASE @OrderBy WHEN 'ExportIncentiveByAC' THEN [COST_ProjectsInput].[ExportIncentiveByAC] END,
+     CASE @OrderBy WHEN 'ExportIncentiveByAC DESC' THEN [COST_ProjectsInput].[ExportIncentiveByAC] END DESC,
+     CASE @OrderBy WHEN 'StatusID' THEN [COST_ProjectsInput].[StatusID] END,
+     CASE @OrderBy WHEN 'StatusID DESC' THEN [COST_ProjectsInput].[StatusID] END DESC,
+     CASE @OrderBy WHEN 'aspnet_Users1_UserFullName' THEN [aspnet_Users1].[UserFullName] END,
+     CASE @OrderBy WHEN 'aspnet_Users1_UserFullName DESC' THEN [aspnet_Users1].[UserFullName] END DESC,
+     CASE @OrderBy WHEN 'aspnet_Users2_UserFullName' THEN [aspnet_Users2].[UserFullName] END,
+     CASE @OrderBy WHEN 'aspnet_Users2_UserFullName DESC' THEN [aspnet_Users2].[UserFullName] END DESC,
+     CASE @OrderBy WHEN 'COST_FinYear3_Descpription' THEN [COST_FinYear3].[Descpription] END,
+     CASE @OrderBy WHEN 'COST_FinYear3_Descpription DESC' THEN [COST_FinYear3].[Descpription] END DESC,
+     CASE @OrderBy WHEN 'COST_ProjectGroups4_ProjectGroupDescription' THEN [COST_ProjectGroups4].[ProjectGroupDescription] END,
+     CASE @OrderBy WHEN 'COST_ProjectGroups4_ProjectGroupDescription DESC' THEN [COST_ProjectGroups4].[ProjectGroupDescription] END DESC,
+     CASE @OrderBy WHEN 'COST_ProjectInputStatus5_Description' THEN [COST_ProjectInputStatus5].[Description] END,
+     CASE @OrderBy WHEN 'COST_ProjectInputStatus5_Description DESC' THEN [COST_ProjectInputStatus5].[Description] END DESC,
+     CASE @OrderBy WHEN 'COST_Quarters6_Description' THEN [COST_Quarters6].[Description] END,
+     CASE @OrderBy WHEN 'COST_Quarters6_Description DESC' THEN [COST_Quarters6].[Description] END DESC,
+     CASE @OrderBy WHEN 'aspnet_Users7_UserFullName' THEN [aspnet_Users7].[UserFullName] END,
+     CASE @OrderBy WHEN 'aspnet_Users7_UserFullName DESC' THEN [aspnet_Users7].[UserFullName] END DESC 
+
+    SET @RecordCount = @@RowCount
+
+  SELECT
+    [COST_ProjectsInput].* ,
+    [aspnet_Users1].[UserFullName] AS aspnet_Users1_UserFullName,
+    [aspnet_Users2].[UserFullName] AS aspnet_Users2_UserFullName,
+    [COST_FinYear3].[Descpription] AS COST_FinYear3_Descpription,
+    [COST_ProjectGroups4].[ProjectGroupDescription] AS COST_ProjectGroups4_ProjectGroupDescription,
+    [COST_ProjectInputStatus5].[Description] AS COST_ProjectInputStatus5_Description,
+    [COST_Quarters6].[Description] AS COST_Quarters6_Description,
+    [aspnet_Users7].[UserFullName] AS aspnet_Users7_UserFullName 
+  FROM [COST_ProjectsInput] 
+      INNER JOIN #PageIndex
+          ON [COST_ProjectsInput].[ProjectGroupID] = #PageIndex.ProjectGroupID
+          AND [COST_ProjectsInput].[FinYear] = #PageIndex.FinYear
+          AND [COST_ProjectsInput].[Quarter] = #PageIndex.Quarter
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users1]
+    ON [COST_ProjectsInput].[CreatedBy] = [aspnet_users1].[LoginID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users2]
+    ON [COST_ProjectsInput].[ApprovedBy] = [aspnet_users2].[LoginID]
+  INNER JOIN [COST_FinYear] AS [COST_FinYear3]
+    ON [COST_ProjectsInput].[FinYear] = [COST_FinYear3].[FinYear]
+  INNER JOIN [COST_ProjectGroups] AS [COST_ProjectGroups4]
+    ON [COST_ProjectsInput].[ProjectGroupID] = [COST_ProjectGroups4].[ProjectGroupID]
+  LEFT OUTER JOIN [COST_ProjectInputStatus] AS [COST_ProjectInputStatus5]
+    ON [COST_ProjectsInput].[StatusID] = [COST_ProjectInputStatus5].[StatusID]
+  INNER JOIN [COST_Quarters] AS [COST_Quarters6]
+    ON [COST_ProjectsInput].[Quarter] = [COST_Quarters6].[Quarter]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]
+    ON [COST_ProjectsInput].[ReceivedBy] = [aspnet_users7].[LoginID]
+  WHERE
+        #PageIndex.IndexID > @StartRowIndex
+        AND #PageIndex.IndexID < (@StartRowIndex + @MaximumRows + 1)
+  ORDER BY
+    #PageIndex.IndexID
+  END
+GO

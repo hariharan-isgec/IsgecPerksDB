@@ -1,0 +1,32 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_D_LCModes](
+	[SerialNo] [int] IDENTITY(1,1) NOT NULL,
+	[CategoryID] [int] NOT NULL,
+	[EntitlementText] [nvarchar](250) NULL,
+	[LCModeID] [int] NOT NULL,
+	[FromDate] [datetime] NOT NULL,
+	[TillDate] [datetime] NULL,
+	[Active] [bit] NOT NULL,
+ CONSTRAINT [PK_TA_D_LCModes] PRIMARY KEY CLUSTERED 
+(
+	[SerialNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[TA_D_LCModes]  WITH CHECK ADD  CONSTRAINT [FK_TA_D_LCModes_CategoryID] FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[TA_Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[TA_D_LCModes] CHECK CONSTRAINT [FK_TA_D_LCModes_CategoryID]
+GO
+ALTER TABLE [dbo].[TA_D_LCModes]  WITH CHECK ADD  CONSTRAINT [FK_TA_D_LCModes_LCModeID] FOREIGN KEY([LCModeID])
+REFERENCES [dbo].[TA_LCModes] ([ModeID])
+GO
+ALTER TABLE [dbo].[TA_D_LCModes] CHECK CONSTRAINT [FK_TA_D_LCModes_LCModeID]
+GO
+ALTER TABLE [dbo].[TA_D_LCModes] ADD  CONSTRAINT [DF_TA_D_LCModes_Active]  DEFAULT ((0)) FOR [Active]
+GO

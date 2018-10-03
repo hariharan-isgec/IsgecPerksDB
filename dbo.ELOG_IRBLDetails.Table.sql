@@ -1,0 +1,66 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ELOG_IRBLDetails](
+	[IRNo] [int] NOT NULL,
+	[SerialNo] [int] IDENTITY(1,1) NOT NULL,
+	[StuffingTypeID] [int] NULL,
+	[StuffingPointID] [int] NULL,
+	[ICDCFSID] [int] NULL,
+	[OtherICDCFS] [nvarchar](100) NULL,
+	[BreakBulkID] [int] NULL,
+	[ChargeTypeID] [int] NULL,
+	[ChargeCategoryID] [int] NULL,
+	[ChargeCodeID] [int] NULL,
+	[Amount] [decimal](18, 2) NULL,
+	[Remarks] [nvarchar](500) NULL,
+ CONSTRAINT [PK_ELOG_IRBLDetails] PRIMARY KEY CLUSTERED 
+(
+	[IRNo] ASC,
+	[SerialNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_BreakbulkID] FOREIGN KEY([BreakBulkID])
+REFERENCES [dbo].[ELOG_BreakbulkTypes] ([BreakbulkTypeID])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_BreakbulkID]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_ChargeCategoryID] FOREIGN KEY([ChargeCategoryID])
+REFERENCES [dbo].[ELOG_ChargeCategories] ([ChargeCategoryID])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_ChargeCategoryID]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_ChargeCodeID] FOREIGN KEY([ChargeCategoryID], [ChargeCodeID])
+REFERENCES [dbo].[ELOG_ChargeCodes] ([ChargeCategoryID], [ChargeCodeID])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_ChargeCodeID]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_ChargeTypeID] FOREIGN KEY([ChargeTypeID])
+REFERENCES [dbo].[ELOG_ChargeTypes] ([ChargeTypeID])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_ChargeTypeID]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_ICDCFSID] FOREIGN KEY([ICDCFSID])
+REFERENCES [dbo].[ELOG_ICDCFSs] ([ICDCFSID])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_ICDCFSID]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_IRNo] FOREIGN KEY([IRNo])
+REFERENCES [dbo].[ELOG_IRBL] ([IRNo])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_IRNo]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_StuffingPointID] FOREIGN KEY([StuffingPointID])
+REFERENCES [dbo].[ELOG_StuffingPoints] ([StuffingPointID])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_StuffingPointID]
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_IRBLDetails_StuffingTypeID] FOREIGN KEY([StuffingTypeID])
+REFERENCES [dbo].[ELOG_StuffingTypes] ([StuffingTypeID])
+GO
+ALTER TABLE [dbo].[ELOG_IRBLDetails] CHECK CONSTRAINT [FK_ELOG_IRBLDetails_StuffingTypeID]
+GO

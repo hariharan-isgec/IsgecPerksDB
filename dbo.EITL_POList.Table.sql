@@ -1,0 +1,56 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[EITL_POList](
+	[SerialNo] [int] IDENTITY(1,1) NOT NULL,
+	[PONumber] [nvarchar](10) NULL,
+	[PORevision] [nvarchar](10) NULL,
+	[PODate] [datetime] NULL,
+	[SupplierID] [nvarchar](9) NULL,
+	[ProjectID] [nvarchar](6) NULL,
+	[DivisionID] [nvarchar](10) NULL,
+	[BuyerID] [nvarchar](8) NULL,
+	[POStatusID] [int] NULL,
+	[IssuedBy] [nvarchar](8) NULL,
+	[IssuedOn] [datetime] NULL,
+	[ClosedBy] [nvarchar](8) NULL,
+	[ClosedOn] [datetime] NULL,
+ CONSTRAINT [PK_EITL_POList] PRIMARY KEY CLUSTERED 
+(
+	[SerialNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[EITL_POList]  WITH NOCHECK ADD  CONSTRAINT [FK_EITL_POList_BuyerID] FOREIGN KEY([BuyerID])
+REFERENCES [dbo].[aspnet_users] ([LoginID])
+GO
+ALTER TABLE [dbo].[EITL_POList] NOCHECK CONSTRAINT [FK_EITL_POList_BuyerID]
+GO
+ALTER TABLE [dbo].[EITL_POList]  WITH CHECK ADD  CONSTRAINT [FK_EITL_POList_ClosedBy] FOREIGN KEY([ClosedBy])
+REFERENCES [dbo].[aspnet_users] ([LoginID])
+GO
+ALTER TABLE [dbo].[EITL_POList] CHECK CONSTRAINT [FK_EITL_POList_ClosedBy]
+GO
+ALTER TABLE [dbo].[EITL_POList]  WITH CHECK ADD  CONSTRAINT [FK_EITL_POList_IssuedBy] FOREIGN KEY([IssuedBy])
+REFERENCES [dbo].[aspnet_users] ([LoginID])
+GO
+ALTER TABLE [dbo].[EITL_POList] CHECK CONSTRAINT [FK_EITL_POList_IssuedBy]
+GO
+ALTER TABLE [dbo].[EITL_POList]  WITH CHECK ADD  CONSTRAINT [FK_EITL_POList_POStatusID] FOREIGN KEY([POStatusID])
+REFERENCES [dbo].[EITL_POStatus] ([StatusID])
+GO
+ALTER TABLE [dbo].[EITL_POList] CHECK CONSTRAINT [FK_EITL_POList_POStatusID]
+GO
+ALTER TABLE [dbo].[EITL_POList]  WITH CHECK ADD  CONSTRAINT [FK_EITL_POList_ProjectID] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[IDM_Projects] ([ProjectID])
+GO
+ALTER TABLE [dbo].[EITL_POList] CHECK CONSTRAINT [FK_EITL_POList_ProjectID]
+GO
+ALTER TABLE [dbo].[EITL_POList]  WITH CHECK ADD  CONSTRAINT [FK_EITL_POList_SupplierID] FOREIGN KEY([SupplierID])
+REFERENCES [dbo].[EITL_Suppliers] ([SupplierID])
+GO
+ALTER TABLE [dbo].[EITL_POList] CHECK CONSTRAINT [FK_EITL_POList_SupplierID]
+GO

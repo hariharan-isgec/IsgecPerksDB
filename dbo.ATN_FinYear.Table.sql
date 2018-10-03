@@ -1,0 +1,22 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ATN_FinYear](
+	[FinYear] [nvarchar](4) NOT NULL,
+	[Description] [nvarchar](30) NOT NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[Active] [bit] NOT NULL,
+ CONSTRAINT [PK_ATN_FinYear] PRIMARY KEY CLUSTERED 
+(
+	[FinYear] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ATN_FinYear] ADD  CONSTRAINT [DF_ATN_FinYear_Description]  DEFAULT ('') FOR [Description]
+GO
+ALTER TABLE [dbo].[ATN_FinYear] ADD  CONSTRAINT [DF_ATN_FinYear_Active]  DEFAULT ((0)) FOR [Active]
+GO

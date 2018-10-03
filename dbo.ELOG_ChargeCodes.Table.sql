@@ -1,0 +1,22 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ELOG_ChargeCodes](
+	[ChargeCategoryID] [int] NOT NULL,
+	[ChargeCodeID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](100) NULL,
+ CONSTRAINT [PK_ELOG_ChargeCodes] PRIMARY KEY CLUSTERED 
+(
+	[ChargeCategoryID] ASC,
+	[ChargeCodeID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ELOG_ChargeCodes]  WITH CHECK ADD  CONSTRAINT [FK_ELOG_ChargeCodes_ChargeCategoryID] FOREIGN KEY([ChargeCategoryID])
+REFERENCES [dbo].[ELOG_ChargeCategories] ([ChargeCategoryID])
+GO
+ALTER TABLE [dbo].[ELOG_ChargeCodes] CHECK CONSTRAINT [FK_ELOG_ChargeCodes_ChargeCategoryID]
+GO

@@ -1,0 +1,92 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spasmAstLWHistorySelectByID]
+  @MrnID Int,
+  @AssetID Int,
+  @SerialNo Int 
+  AS
+  SELECT
+		[ASM_AstHistory].[MrnID],
+		[ASM_AstHistory].[AssetID],
+		[ASM_AstHistory].[SerialNo],
+		[ASM_AstHistory].[ActivityID],
+		[ASM_AstHistory].[AssetTypeID],
+		[ASM_AstHistory].[MrnDate],
+		[ASM_AstHistory].[MrnDescription],
+		[ASM_AstHistory].[SupplierID],
+		[ASM_AstHistory].[DateOfPurchase],
+		[ASM_AstHistory].[WarrantyTill],
+		[ASM_AstHistory].[InsuranceTill],
+		[ASM_AstHistory].[BrandID],
+		[ASM_AstHistory].[ModelNo],
+		[ASM_AstHistory].[OtherSpecifications],
+		[ASM_AstHistory].[PurchasedQuantity],
+		[ASM_AstHistory].[RecievedAt],
+		[ASM_AstHistory].[RecievedOn],
+		[ASM_AstHistory].[Remarks],
+		[ASM_AstHistory].[RecievedBy],
+		[ASM_AstHistory].[AssetNo],
+		[ASM_AstHistory].[AssetSerialNo],
+		[ASM_AstHistory].[IssueToLocation],
+		[ASM_AstHistory].[UserID],
+		[ASM_AstHistory].[LocationID],
+		[ASM_AstHistory].[Issued],
+		[ASM_AstHistory].[StandBy],
+		[ASM_AstHistory].[ReplacedTill],
+		[ASM_AstHistory].[Returnable],
+		[ASM_AstHistory].[ExpectedDate],
+		[ASM_AstHistory].[Transferred],
+		[ASM_AstHistory].[ToOfficeID],
+		[ASM_AstHistory].[RecievedTransfered],
+		[ASM_AstHistory].[FromOfficeID],
+		[ASM_AstHistory].[Upgraded],
+		[ASM_AstHistory].[ProblemDetails],
+		[ASM_AstHistory].[OnRepair],
+		[ASM_AstHistory].[ToSupplierID],
+		[ASM_AstHistory].[Discarded],
+		[ASM_AstHistory].[Modified],
+		[ASM_AstHistory].[ModifiedOn],
+		[ASM_AstHistory].[ModifiedBy],
+		[ASM_AstHistory].[ModificationRemarks],
+		[ASM_AstHistory].[IPAddress],
+		[ASM_AstHistory].[HostName],
+		[ASM_AstHistory].[INDomain],
+		[ASM_AstHistory].[DomainName],
+		[ASM_AstHistory].[MapDrive],
+		[ASM_AstHistory].[PenDriveDisable],
+		[ASM_AstHistory].[CDROMDisable],
+		[ASM_AstHistory].[InternetAccess],
+		[ASM_AstHistory].[Keyboard],
+		[ASM_AstHistory].[Mouse],
+		[ASM_AstHistory].[FloppyDrive],
+		[ASM_AstHistory].[CPUBrandID],
+		[ASM_AstHistory].[NoOfCPUs],
+		[ASM_AstHistory].[CPUDetails],
+		[ASM_AstHistory].[CPUSerialNo],
+		[ASM_AstHistory].[RAMID],
+		[ASM_AstHistory].[SizeOfRAM],
+		[ASM_AstHistory].[HDDBrandID],
+		[ASM_AstHistory].[NoOfHDD],
+		[ASM_AstHistory].[SizeOfHDD],
+		[ASM_AstHistory].[HDDDetails],
+		[ASM_AstHistory].[HDDSerialNo],
+		[ASM_AstHistory].[CDROMBrandID],
+		[ASM_AstHistory].[NoOfCDROM],
+		[ASM_AstHistory].[CDROMDetails],
+		[ASM_AstHistory].[CDROMSerialNo],
+		[ASM_AstHistory].[VDUBrandID],
+		[ASM_AstHistory].[VDUDetails],
+		[ASM_AstHistory].[VDUSerialNo],
+		[ASM_AstHistory].[PCOSID],
+		[ASM_AstHistory].[PCOSDetails],
+		[ASM_AstHistory].[PCOSSerialNo] 
+  FROM [ASM_AstHistory] 
+  WHERE
+  [ASM_AstHistory].[MrnID] = @MrnID
+  AND [ASM_AstHistory].[AssetID] = @AssetID
+  AND [ASM_AstHistory].[SerialNo] = @SerialNo
+GO

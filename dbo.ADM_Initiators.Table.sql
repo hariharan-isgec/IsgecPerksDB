@@ -1,0 +1,26 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ADM_Initiators](
+	[ServiceID] [nvarchar](10) NOT NULL,
+	[InitiatorID] [nvarchar](8) NOT NULL,
+ CONSTRAINT [PK_ADM_Initiators] PRIMARY KEY CLUSTERED 
+(
+	[ServiceID] ASC,
+	[InitiatorID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ADM_Initiators]  WITH CHECK ADD  CONSTRAINT [FK_ADM_Initiators_ADM_Services] FOREIGN KEY([ServiceID])
+REFERENCES [dbo].[ADM_Services] ([ServiceID])
+GO
+ALTER TABLE [dbo].[ADM_Initiators] CHECK CONSTRAINT [FK_ADM_Initiators_ADM_Services]
+GO
+ALTER TABLE [dbo].[ADM_Initiators]  WITH CHECK ADD  CONSTRAINT [FK_ADM_Initiators_HRM_Employees] FOREIGN KEY([InitiatorID])
+REFERENCES [dbo].[HRM_Employees] ([CardNo])
+GO
+ALTER TABLE [dbo].[ADM_Initiators] CHECK CONSTRAINT [FK_ADM_Initiators_HRM_Employees]
+GO

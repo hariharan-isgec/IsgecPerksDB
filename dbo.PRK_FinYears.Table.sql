@@ -1,0 +1,20 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PRK_FinYears](
+	[FinYear] [int] IDENTITY(2008,1) NOT NULL,
+	[Description] [nvarchar](40) NOT NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[Status] [nvarchar](5) NOT NULL,
+ CONSTRAINT [PK_PRK_FinYear] PRIMARY KEY CLUSTERED 
+(
+	[FinYear] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PRK_FinYears] ADD  CONSTRAINT [DF_PRK_FinYears_Description]  DEFAULT ('') FOR [Description]
+GO

@@ -1,0 +1,21 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DCM_ProjectByEmployee](
+	[RecordID] [int] IDENTITY(1,1) NOT NULL,
+	[CardNo] [nvarchar](8) NOT NULL,
+	[ProjectID] [nvarchar](6) NOT NULL,
+ CONSTRAINT [PK_DCM_ProjectByEmployee_1] PRIMARY KEY CLUSTERED 
+(
+	[RecordID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[DCM_ProjectByEmployee]  WITH CHECK ADD  CONSTRAINT [FK_DCM_ProjectByEmployee_DCM_Projects] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[DCM_Projectss] ([ProjectID])
+GO
+ALTER TABLE [dbo].[DCM_ProjectByEmployee] CHECK CONSTRAINT [FK_DCM_ProjectByEmployee_DCM_Projects]
+GO

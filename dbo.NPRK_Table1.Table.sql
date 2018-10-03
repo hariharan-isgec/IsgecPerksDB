@@ -1,0 +1,22 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[NPRK_Table1](
+	[CardNo] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NULL,
+	[Designation] [nvarchar](50) NULL,
+	[Department] [nvarchar](6) NULL,
+ CONSTRAINT [PK_NPRK_Table1] PRIMARY KEY CLUSTERED 
+(
+	[CardNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[NPRK_Table1]  WITH CHECK ADD  CONSTRAINT [FK_NPRK_Table1_Department] FOREIGN KEY([Department])
+REFERENCES [dbo].[HRM_Departments] ([DepartmentID])
+GO
+ALTER TABLE [dbo].[NPRK_Table1] CHECK CONSTRAINT [FK_NPRK_Table1_Department]
+GO

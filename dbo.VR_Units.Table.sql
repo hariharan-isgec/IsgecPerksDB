@@ -1,0 +1,21 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[VR_Units](
+	[UnitID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](50) NOT NULL,
+	[ConversionFactor] [decimal](18, 6) NOT NULL,
+	[UnitSet] [int] NOT NULL,
+ CONSTRAINT [PK_VR_Units] PRIMARY KEY CLUSTERED 
+(
+	[UnitID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[VR_Units] ADD  CONSTRAINT [DF_VR_Units_ConversionFactor]  DEFAULT ((0)) FOR [ConversionFactor]
+GO
+ALTER TABLE [dbo].[VR_Units] ADD  CONSTRAINT [DF_VR_Units_UnitSet_1]  DEFAULT ((0)) FOR [UnitSet]
+GO

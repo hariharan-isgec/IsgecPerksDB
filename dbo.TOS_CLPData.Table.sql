@@ -1,0 +1,36 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TOS_CLPData](
+	[ProjectID] [nvarchar](6) NOT NULL,
+	[ProgressID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](50) NOT NULL,
+	[AsOn] [datetime] NULL,
+	[CreatedBy] [nvarchar](8) NULL,
+	[CreatedOn] [datetime] NULL,
+	[Active] [bit] NOT NULL,
+	[DueByDays] [int] NULL,
+ CONSTRAINT [PK_TOS_CLPData] PRIMARY KEY CLUSTERED 
+(
+	[ProjectID] ASC,
+	[ProgressID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[TOS_CLPData]  WITH CHECK ADD  CONSTRAINT [FK_CLPData_CreatedBy] FOREIGN KEY([CreatedBy])
+REFERENCES [dbo].[aspnet_users] ([LoginID])
+GO
+ALTER TABLE [dbo].[TOS_CLPData] CHECK CONSTRAINT [FK_CLPData_CreatedBy]
+GO
+ALTER TABLE [dbo].[TOS_CLPData]  WITH CHECK ADD  CONSTRAINT [FK_CLPData_ProjectID] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[TOS_Projects] ([ProjectID])
+GO
+ALTER TABLE [dbo].[TOS_CLPData] CHECK CONSTRAINT [FK_CLPData_ProjectID]
+GO
+ALTER TABLE [dbo].[TOS_CLPData] ADD  CONSTRAINT [DF_TOS_CLPData_Active]  DEFAULT ((1)) FOR [Active]
+GO
+ALTER TABLE [dbo].[TOS_CLPData] ADD  CONSTRAINT [DF_TOS_CLPData_DueByDays]  DEFAULT ((15)) FOR [DueByDays]
+GO

@@ -1,0 +1,23 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[GRT_Users](
+	[UserID] [nvarchar](8) NOT NULL,
+	[Designation] [nvarchar](100) NULL,
+	[Department] [nvarchar](100) NULL,
+	[DirectNo] [nvarchar](100) NULL,
+	[CellNo] [nvarchar](100) NULL,
+ CONSTRAINT [PK_GRT_Users] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[GRT_Users]  WITH CHECK ADD  CONSTRAINT [FK_GRT_Users_HRM_Employees] FOREIGN KEY([UserID])
+REFERENCES [dbo].[HRM_Employees] ([CardNo])
+GO
+ALTER TABLE [dbo].[GRT_Users] CHECK CONSTRAINT [FK_GRT_Users_HRM_Employees]
+GO

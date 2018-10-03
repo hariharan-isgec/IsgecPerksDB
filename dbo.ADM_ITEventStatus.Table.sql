@@ -1,0 +1,53 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ADM_ITEventStatus](
+	[EventID] [int] NOT NULL,
+	[ITServiceID] [nvarchar](15) NOT NULL,
+	[ActionNotRequired] [bit] NOT NULL,
+	[ActionTaken] [bit] NOT NULL,
+	[Responded] [bit] NOT NULL,
+	[RespondedBy] [nvarchar](8) NULL,
+	[RespondedOn] [datetime] NULL,
+	[AlertedOn] [datetime] NULL,
+ CONSTRAINT [PK_ADM_ITEventStatus] PRIMARY KEY CLUSTERED 
+(
+	[EventID] ASC,
+	[ITServiceID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_ADM_ITEventStatus] ON [dbo].[ADM_ITEventStatus] 
+(
+	[EventID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_ADM_ITEventStatus_1] ON [dbo].[ADM_ITEventStatus] 
+(
+	[ITServiceID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus]  WITH CHECK ADD  CONSTRAINT [FK_ADM_ITEventStatus_ADM_ITEventTransactions] FOREIGN KEY([EventID])
+REFERENCES [dbo].[ADM_ITEventTransactions] ([EventID])
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus] CHECK CONSTRAINT [FK_ADM_ITEventStatus_ADM_ITEventTransactions]
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus]  WITH CHECK ADD  CONSTRAINT [FK_ADM_ITEventStatus_ADM_ITServices] FOREIGN KEY([ITServiceID])
+REFERENCES [dbo].[ADM_ITServices] ([ITServiceID])
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus] CHECK CONSTRAINT [FK_ADM_ITEventStatus_ADM_ITServices]
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus]  WITH CHECK ADD  CONSTRAINT [FK_ADM_ITEventStatus_HRM_Employees] FOREIGN KEY([RespondedBy])
+REFERENCES [dbo].[aspnet_users] ([LoginID])
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus] CHECK CONSTRAINT [FK_ADM_ITEventStatus_HRM_Employees]
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus] ADD  CONSTRAINT [DF_ADM_ITEventStatus_ActionNotRequired]  DEFAULT ((0)) FOR [ActionNotRequired]
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus] ADD  CONSTRAINT [DF_ADM_ITEventStatus_ActionTaken]  DEFAULT ((0)) FOR [ActionTaken]
+GO
+ALTER TABLE [dbo].[ADM_ITEventStatus] ADD  CONSTRAINT [DF_ADM_ITEventStatus_Responded]  DEFAULT ((0)) FOR [Responded]
+GO

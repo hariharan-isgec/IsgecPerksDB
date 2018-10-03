@@ -1,0 +1,34 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PRK_PetrolRate](
+	[FinYear] [int] NOT NULL,
+	[MonthID] [int] NOT NULL,
+	[LocationID] [int] NOT NULL,
+	[PetrolRate] [decimal](6, 2) NULL,
+ CONSTRAINT [PK_PRK_PetrolRate] PRIMARY KEY CLUSTERED 
+(
+	[FinYear] ASC,
+	[MonthID] ASC,
+	[LocationID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PRK_PetrolRate]  WITH CHECK ADD  CONSTRAINT [FK_PRK_PetrolRate_FinYear] FOREIGN KEY([FinYear])
+REFERENCES [dbo].[PRK_FinYears] ([FinYear])
+GO
+ALTER TABLE [dbo].[PRK_PetrolRate] CHECK CONSTRAINT [FK_PRK_PetrolRate_FinYear]
+GO
+ALTER TABLE [dbo].[PRK_PetrolRate]  WITH CHECK ADD  CONSTRAINT [FK_PRK_PetrolRate_LocationID] FOREIGN KEY([LocationID])
+REFERENCES [dbo].[HRM_Locations] ([LocationID])
+GO
+ALTER TABLE [dbo].[PRK_PetrolRate] CHECK CONSTRAINT [FK_PRK_PetrolRate_LocationID]
+GO
+ALTER TABLE [dbo].[PRK_PetrolRate]  WITH CHECK ADD  CONSTRAINT [FK_PRK_PetrolRate_MonthID] FOREIGN KEY([MonthID])
+REFERENCES [dbo].[PRK_Months] ([MonthID])
+GO
+ALTER TABLE [dbo].[PRK_PetrolRate] CHECK CONSTRAINT [FK_PRK_PetrolRate_MonthID]
+GO

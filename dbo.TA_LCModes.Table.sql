@@ -1,0 +1,22 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_LCModes](
+	[ModeID] [int] IDENTITY(1,1) NOT NULL,
+	[ModeName] [nvarchar](50) NULL,
+	[OutOfSequence] [bit] NOT NULL,
+	[Sequence] [int] NULL,
+	[UnderMilageClaim] [bit] NOT NULL,
+ CONSTRAINT [PK_TA_LCModes] PRIMARY KEY CLUSTERED 
+(
+	[ModeID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[TA_LCModes] ADD  CONSTRAINT [DF_TA_LCModes_AllowedToAll]  DEFAULT ((0)) FOR [OutOfSequence]
+GO
+ALTER TABLE [dbo].[TA_LCModes] ADD  CONSTRAINT [DF_TA_LCModes_UnderMilageClaim]  DEFAULT ((0)) FOR [UnderMilageClaim]
+GO

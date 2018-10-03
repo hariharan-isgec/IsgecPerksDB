@@ -1,0 +1,11 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PLMD_TMP](
+	[Emp] [nchar](8) NULL,
+	[EmpName] [nvarchar](26) NULL
+) ON [PRIMARY]
+GO

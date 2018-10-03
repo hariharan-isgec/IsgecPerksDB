@@ -1,0 +1,38 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[spcalRegisterComplaintsInsert]
+  @LoggedOn DateTime,
+  @UserID NVarChar(8),
+  @CallTypeID Int,
+  @CallDescription NVarChar(500),
+  @CallStatusID Int,
+  @FileAttached NvarChar(250), 
+  @FileExtention NvarChar(10), 
+  @Return_CallID Int = null OUTPUT
+  AS
+  INSERT [CAL_Register]
+  (
+   [LoggedOn]
+  ,[UserID]
+  ,[CallTypeID]
+  ,[CallDescription]
+  ,[CallStatusID]
+  ,[FileAttached]
+	,[FileExtention]
+  )
+  VALUES
+  (
+   @LoggedOn
+  ,@UserID
+  ,@CallTypeID
+  ,@CallDescription
+  ,@CallStatusID
+	,@FileAttached
+	,@FileExtention
+  )
+  SET @Return_CallID = Scope_Identity()
+GO

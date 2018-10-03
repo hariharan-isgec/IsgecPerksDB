@@ -1,0 +1,22 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CAL_CallTypes](
+	[CallTypeID] [int] IDENTITY(1,1) NOT NULL,
+	[Description] [nvarchar](30) NOT NULL,
+	[Priority] [nvarchar](1) NULL,
+	[ResponseTime] [decimal](6, 2) NULL,
+ CONSTRAINT [PK_CAL_CallTypes] PRIMARY KEY CLUSTERED 
+(
+	[CallTypeID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[CAL_CallTypes]  WITH CHECK ADD  CONSTRAINT [FK_CAL_CallTypes_CAL_Priority] FOREIGN KEY([Priority])
+REFERENCES [dbo].[CAL_Priority] ([Priority])
+GO
+ALTER TABLE [dbo].[CAL_CallTypes] CHECK CONSTRAINT [FK_CAL_CallTypes_CAL_Priority]
+GO

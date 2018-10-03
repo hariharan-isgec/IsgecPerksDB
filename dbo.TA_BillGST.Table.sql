@@ -1,0 +1,77 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_BillGST](
+	[TABillNo] [int] NOT NULL,
+	[SerialNo] [int] NOT NULL,
+	[PurchaseType] [nvarchar](50) NULL,
+	[IsgecGSTIN] [int] NULL,
+	[BillNumber] [nvarchar](50) NOT NULL,
+	[BillDate] [datetime] NOT NULL,
+	[BPID] [nvarchar](9) NULL,
+	[SupplierGSTIN] [int] NULL,
+	[SupplierGSTINNo] [nvarchar](50) NULL,
+	[StateID] [nvarchar](2) NULL,
+	[BillType] [int] NULL,
+	[HSNSACCode] [nvarchar](20) NULL,
+	[AssessableValue] [decimal](18, 2) NULL,
+	[IGSTRate] [decimal](18, 2) NULL,
+	[IGSTAmount] [decimal](18, 2) NULL,
+	[SGSTRate] [decimal](18, 2) NULL,
+	[SGSTAmount] [decimal](18, 2) NULL,
+	[CGSTRate] [decimal](18, 2) NULL,
+	[CGSTAmount] [decimal](18, 2) NULL,
+	[CessRate] [decimal](18, 2) NULL,
+	[CessAmount] [decimal](18, 2) NULL,
+	[TotalGST] [decimal](18, 2) NULL,
+	[TotalAmount] [decimal](18, 2) NULL,
+ CONSTRAINT [PK_TA_BillGST] PRIMARY KEY CLUSTERED 
+(
+	[TABillNo] ASC,
+	[SerialNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_BillType] FOREIGN KEY([BillType])
+REFERENCES [dbo].[SPMT_BillTypes] ([BillType])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_BillType]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_BPID] FOREIGN KEY([BPID])
+REFERENCES [dbo].[VR_BusinessPartner] ([BPID])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_BPID]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_HSNSACCode] FOREIGN KEY([BillType], [HSNSACCode])
+REFERENCES [dbo].[SPMT_HSNSACCodes] ([BillType], [HSNSACCode])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_HSNSACCode]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_IsgecGSTIN] FOREIGN KEY([IsgecGSTIN])
+REFERENCES [dbo].[SPMT_IsgecGSTIN] ([GSTID])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_IsgecGSTIN]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_SerialNo] FOREIGN KEY([TABillNo], [SerialNo])
+REFERENCES [dbo].[TA_BillDetails] ([TABillNo], [SerialNo])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_SerialNo]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_StateID] FOREIGN KEY([StateID])
+REFERENCES [dbo].[SPMT_ERPStates] ([StateID])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_StateID]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_SupplierGSTIN] FOREIGN KEY([BPID], [SupplierGSTIN])
+REFERENCES [dbo].[VR_BPGSTIN] ([BPID], [GSTIN])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_SupplierGSTIN]
+GO
+ALTER TABLE [dbo].[TA_BillGST]  WITH CHECK ADD  CONSTRAINT [FK_TA_BillGST_TABillNo] FOREIGN KEY([TABillNo])
+REFERENCES [dbo].[TA_Bills] ([TABillNo])
+GO
+ALTER TABLE [dbo].[TA_BillGST] CHECK CONSTRAINT [FK_TA_BillGST_TABillNo]
+GO

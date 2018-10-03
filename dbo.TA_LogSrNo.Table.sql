@@ -1,0 +1,11 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_LogSrNo](
+	[MailSrNo] [int] NULL,
+	[LinkSrNo] [int] NULL
+) ON [PRIMARY]
+GO

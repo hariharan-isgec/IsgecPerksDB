@@ -1,0 +1,98 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PAK_Items](
+	[ItemNo] [int] IDENTITY(1,1) NOT NULL,
+	[ItemCode] [nvarchar](50) NULL,
+	[ItemDescription] [nvarchar](100) NULL,
+	[DivisionID] [int] NULL,
+	[ElementID] [nvarchar](8) NULL,
+	[UOMQuantity] [int] NULL,
+	[Quantity] [decimal](18, 2) NOT NULL,
+	[UOMWeight] [int] NULL,
+	[WeightPerUnit] [decimal](18, 2) NOT NULL,
+	[DocumentNo] [int] NULL,
+	[ParentItemNo] [int] NULL,
+	[Active] [bit] NOT NULL,
+	[Root] [bit] NOT NULL,
+	[Middle] [bit] NOT NULL,
+	[Bottom] [bit] NOT NULL,
+	[Free] [bit] NOT NULL,
+	[ItemLevel] [int] NOT NULL,
+	[Prefix] [nvarchar](1000) NULL,
+	[RootItem] [int] NULL,
+ CONSTRAINT [PK_PAK_Items] PRIMARY KEY CLUSTERED 
+(
+	[ItemNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_PAK_Items] ON [dbo].[PAK_Items] 
+(
+	[ParentItemNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_PAK_Items_1] ON [dbo].[PAK_Items] 
+(
+	[RootItem] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [IX_PAK_Items_2] ON [dbo].[PAK_Items] 
+(
+	[ItemDescription] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[PAK_Items]  WITH CHECK ADD  CONSTRAINT [FK_PAK_Items_DivisionID] FOREIGN KEY([DivisionID])
+REFERENCES [dbo].[PAK_Divisions] ([DivisionID])
+GO
+ALTER TABLE [dbo].[PAK_Items] CHECK CONSTRAINT [FK_PAK_Items_DivisionID]
+GO
+ALTER TABLE [dbo].[PAK_Items]  WITH CHECK ADD  CONSTRAINT [FK_PAK_Items_DocumentNo] FOREIGN KEY([DocumentNo])
+REFERENCES [dbo].[PAK_Documents] ([DocumentNo])
+GO
+ALTER TABLE [dbo].[PAK_Items] CHECK CONSTRAINT [FK_PAK_Items_DocumentNo]
+GO
+ALTER TABLE [dbo].[PAK_Items]  WITH CHECK ADD  CONSTRAINT [FK_PAK_Items_ElementID] FOREIGN KEY([ElementID])
+REFERENCES [dbo].[PAK_Elements] ([ElementID])
+GO
+ALTER TABLE [dbo].[PAK_Items] CHECK CONSTRAINT [FK_PAK_Items_ElementID]
+GO
+ALTER TABLE [dbo].[PAK_Items]  WITH CHECK ADD  CONSTRAINT [FK_PAK_Items_ParentItemNo] FOREIGN KEY([ParentItemNo])
+REFERENCES [dbo].[PAK_Items] ([ItemNo])
+GO
+ALTER TABLE [dbo].[PAK_Items] CHECK CONSTRAINT [FK_PAK_Items_ParentItemNo]
+GO
+ALTER TABLE [dbo].[PAK_Items]  WITH CHECK ADD  CONSTRAINT [FK_PAK_Items_RootItem] FOREIGN KEY([RootItem])
+REFERENCES [dbo].[PAK_Items] ([ItemNo])
+GO
+ALTER TABLE [dbo].[PAK_Items] CHECK CONSTRAINT [FK_PAK_Items_RootItem]
+GO
+ALTER TABLE [dbo].[PAK_Items]  WITH CHECK ADD  CONSTRAINT [FK_PAK_Items_UOMQuantity] FOREIGN KEY([UOMQuantity])
+REFERENCES [dbo].[PAK_Units] ([UnitID])
+GO
+ALTER TABLE [dbo].[PAK_Items] CHECK CONSTRAINT [FK_PAK_Items_UOMQuantity]
+GO
+ALTER TABLE [dbo].[PAK_Items]  WITH CHECK ADD  CONSTRAINT [FK_PAK_Items_UOMWeight] FOREIGN KEY([UOMWeight])
+REFERENCES [dbo].[PAK_Units] ([UnitID])
+GO
+ALTER TABLE [dbo].[PAK_Items] CHECK CONSTRAINT [FK_PAK_Items_UOMWeight]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_PAK_Items_Quantity]  DEFAULT ((0)) FOR [Quantity]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_PAK_Items_WeightPerUnit]  DEFAULT ((0)) FOR [WeightPerUnit]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_PAK_Items_Active]  DEFAULT ((1)) FOR [Active]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_Table_1_Top]  DEFAULT ((0)) FOR [Root]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_Table_1_Free1]  DEFAULT ((0)) FOR [Middle]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_PAK_Items_Bottom]  DEFAULT ((0)) FOR [Bottom]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_PAK_Items_Free]  DEFAULT ((0)) FOR [Free]
+GO
+ALTER TABLE [dbo].[PAK_Items] ADD  CONSTRAINT [DF_PAK_Items_Position]  DEFAULT ((0)) FOR [ItemLevel]
+GO

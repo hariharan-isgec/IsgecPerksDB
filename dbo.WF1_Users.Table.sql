@@ -1,0 +1,17 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[WF1_Users](
+	[UserID] [varchar](8) NOT NULL,
+	[Pwd] [varchar](20) NOT NULL,
+	[ProjectCode] [varchar](9) NOT NULL,
+	[NoofDays] [int] NOT NULL
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO

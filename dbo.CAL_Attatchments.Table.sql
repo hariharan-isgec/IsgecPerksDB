@@ -1,0 +1,26 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CAL_Attatchments](
+	[CallID] [int] NOT NULL,
+	[SerialNo] [int] IDENTITY(1,1) NOT NULL,
+	[AttatchmentName] [nvarchar](250) NOT NULL,
+	[DiskFileName] [nvarchar](50) NOT NULL,
+	[IsImage] [bit] NOT NULL,
+ CONSTRAINT [PK_CAL_Attatchments] PRIMARY KEY CLUSTERED 
+(
+	[CallID] ASC,
+	[SerialNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[CAL_Attatchments]  WITH CHECK ADD  CONSTRAINT [ATM_CallID] FOREIGN KEY([CallID])
+REFERENCES [dbo].[CAL_Register] ([CallID])
+GO
+ALTER TABLE [dbo].[CAL_Attatchments] CHECK CONSTRAINT [ATM_CallID]
+GO
+ALTER TABLE [dbo].[CAL_Attatchments] ADD  CONSTRAINT [DF_CAL_Attatchments_IsImage]  DEFAULT ((0)) FOR [IsImage]
+GO

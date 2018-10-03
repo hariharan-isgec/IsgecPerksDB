@@ -1,0 +1,96 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SPMT_newSBH](
+	[IRNo] [int] IDENTITY(1,1) NOT NULL,
+	[PurchaseType] [nvarchar](50) NULL,
+	[TranTypeID] [nvarchar](3) NULL,
+	[IRReceivedOn] [datetime] NULL,
+	[IsgecGSTIN] [int] NULL,
+	[BPID] [nvarchar](9) NULL,
+	[SupplierGSTIN] [int] NULL,
+	[SupplierName] [nvarchar](100) NULL,
+	[SupplierGSTINNumber] [nvarchar](50) NULL,
+	[ShipToState] [nvarchar](2) NULL,
+	[BillNumber] [nvarchar](50) NULL,
+	[BillDate] [datetime] NULL,
+	[BillRemarks] [nvarchar](500) NULL,
+	[CreatedBy] [nvarchar](8) NULL,
+	[CreatedOn] [datetime] NULL,
+	[AdviceNo] [int] NULL,
+	[ProjectID] [nvarchar](6) NULL,
+	[ElementID] [nvarchar](8) NULL,
+	[EmployeeID] [nvarchar](8) NULL,
+	[DepartmentID] [nvarchar](6) NULL,
+	[CostCenterID] [nvarchar](6) NULL,
+	[UploadBatchNo] [nvarchar](50) NULL,
+	[TotalBillAmount] [decimal](18, 2) NULL,
+ CONSTRAINT [PK_SPMT_newSBH] PRIMARY KEY CLUSTERED 
+(
+	[IRNo] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_AdviceNo] FOREIGN KEY([AdviceNo])
+REFERENCES [dbo].[SPMT_newPA] ([AdviceNo])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_AdviceNo]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_BPID] FOREIGN KEY([BPID])
+REFERENCES [dbo].[VR_BusinessPartner] ([BPID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_BPID]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_CostCenterID] FOREIGN KEY([CostCenterID])
+REFERENCES [dbo].[SPMT_CostCenters] ([CostCenterID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_CostCenterID]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_CreatedBy] FOREIGN KEY([CreatedBy])
+REFERENCES [dbo].[aspnet_users] ([LoginID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_CreatedBy]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_DepartmentID] FOREIGN KEY([DepartmentID])
+REFERENCES [dbo].[HRM_Departments] ([DepartmentID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_DepartmentID]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_ElementID] FOREIGN KEY([ElementID])
+REFERENCES [dbo].[IDM_WBS] ([WBSID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_ElementID]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_EmployeeID] FOREIGN KEY([EmployeeID])
+REFERENCES [dbo].[HRM_Employees] ([CardNo])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_EmployeeID]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_IsgecGSTIN] FOREIGN KEY([IsgecGSTIN])
+REFERENCES [dbo].[SPMT_IsgecGSTIN] ([GSTID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_IsgecGSTIN]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_ProjectID] FOREIGN KEY([ProjectID])
+REFERENCES [dbo].[IDM_Projects] ([ProjectID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_ProjectID]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_ShipToState] FOREIGN KEY([ShipToState])
+REFERENCES [dbo].[SPMT_ERPStates] ([StateID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_ShipToState]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_SupplierGSTIN] FOREIGN KEY([BPID], [SupplierGSTIN])
+REFERENCES [dbo].[VR_BPGSTIN] ([BPID], [GSTIN])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_SupplierGSTIN]
+GO
+ALTER TABLE [dbo].[SPMT_newSBH]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_newSBH_TranTypeID] FOREIGN KEY([TranTypeID])
+REFERENCES [dbo].[SPMT_TranTypes] ([TranTypeID])
+GO
+ALTER TABLE [dbo].[SPMT_newSBH] CHECK CONSTRAINT [FK_SPMT_newSBH_TranTypeID]
+GO

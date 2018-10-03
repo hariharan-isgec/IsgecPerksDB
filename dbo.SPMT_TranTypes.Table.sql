@@ -1,0 +1,23 @@
+USE [IJTPerks]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SPMT_TranTypes](
+	[TranTypeID] [nvarchar](3) NOT NULL,
+	[Description] [nvarchar](30) NOT NULL,
+	[GroupID] [nvarchar](6) NULL,
+	[BaaNCompany] [nvarchar](10) NULL,
+	[BaaNLedger] [nvarchar](20) NULL,
+ CONSTRAINT [PK_SPMT_TranTypes] PRIMARY KEY CLUSTERED 
+(
+	[TranTypeID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[SPMT_TranTypes]  WITH CHECK ADD  CONSTRAINT [FK_SPMT_TranTypes_SYS_Groups] FOREIGN KEY([GroupID])
+REFERENCES [dbo].[SYS_Groups] ([GroupID])
+GO
+ALTER TABLE [dbo].[SPMT_TranTypes] CHECK CONSTRAINT [FK_SPMT_TranTypes_SYS_Groups]
+GO
