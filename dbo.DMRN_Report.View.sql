@@ -23,7 +23,6 @@ FROM            dbo.VR_LorryReceiptDetails INNER JOIN
                          dbo.VR_LorryReceiptStatus ON dbo.VR_LorryReceipts.LRStatusID = dbo.VR_LorryReceiptStatus.LRStatusID INNER JOIN
                          dbo.HRM_Employees ON dbo.VR_LorryReceipts.CreatedBy = dbo.HRM_Employees.CardNo ON dbo.VR_LorryReceiptDetails.ProjectID = dbo.VR_LorryReceipts.ProjectID AND 
                          dbo.VR_LorryReceiptDetails.MRNNo = dbo.VR_LorryReceipts.MRNNo
-WHERE        (dbo.VR_LorryReceipts.ProjectID = 'JB0963')
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 

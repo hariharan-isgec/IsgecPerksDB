@@ -4,26 +4,19 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE VIEW [dbo].[ATN_TotAbsEmp]
+CREATE VIEW [dbo].[ta]
 AS
-SELECT        COUNT(DISTINCT CardNo) AS TotAbsEmp
-FROM            dbo.ATN_Attendance
-WHERE        (PunchStatusID = 'AS') AND (Applied2LeaveTypeID <> 'OD' OR
-                         Applied2LeaveTypeID <> 'SP' OR
-                         Applied2LeaveTypeID IS NULL) AND (MONTH(AttenDate) = 9) AND (YEAR(AttenDate) = 2018) OR
-                         (PunchStatusID = 'AF') AND (MONTH(AttenDate) = 9) AND (YEAR(AttenDate) = 2018) AND (Applied1LeaveTypeID <> 'OD' OR
-                         Applied1LeaveTypeID <> 'SP' OR
-                         Applied1LeaveTypeID IS NULL) OR
-                         (PunchStatusID = 'AD') AND (MONTH(AttenDate) = 9) AND (YEAR(AttenDate) = 2018) AND (Applied1LeaveTypeID <> 'OD' OR
-                         Applied1LeaveTypeID <> 'SP' OR
-                         Applied1LeaveTypeID IS NULL)
+SELECT        dbo.TA_Bills.*, dbo.TA_TravelTypes.TravelTypeDescription, dbo.TA_BillStates.Description
+FROM            dbo.TA_Bills LEFT OUTER JOIN
+                         dbo.TA_TravelTypes ON dbo.TA_Bills.TravelTypeID = dbo.TA_TravelTypes.TravelTypeID LEFT OUTER JOIN
+                         dbo.TA_BillStates ON dbo.TA_Bills.BillStatusID = dbo.TA_BillStates.BillStatusID
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
    Begin PaneConfigurations = 
       Begin PaneConfiguration = 0
          NumPanes = 4
-         Configuration = "(H (1[22] 4[39] 2[20] 3) )"
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
       End
       Begin PaneConfiguration = 1
          NumPanes = 3
@@ -89,12 +82,32 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "ATN_Attendance"
+         Begin Table = "TA_Bills_1"
             Begin Extent = 
                Top = 6
                Left = 38
-               Bottom = 114
-               Right = 223
+               Bottom = 136
+               Right = 274
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "TA_BillStates"
+            Begin Extent = 
+               Top = 5
+               Left = 360
+               Bottom = 101
+               Right = 530
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "TA_TravelTypes"
+            Begin Extent = 
+               Top = 53
+               Left = 707
+               Bottom = 149
+               Right = 914
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -106,8 +119,9 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
+      Begin ColumnWidths = 10
          Width = 284
+         Width = 1500
          Width = 1500
          Width = 1500
          Width = 1500
@@ -119,7 +133,7 @@ Begin DesignProperties =
       End
    End
    Begin CriteriaPane = 
-      Begin ColumnWidths = 12
+      Begin ColumnWidths = 11
          Column = 1440
          Alias = 900
          Table = 1170
@@ -136,7 +150,7 @@ Begin DesignProperties =
       End
    End
 End
-' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'ATN_TotAbsEmp'
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'ta'
 GO
-EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'ATN_TotAbsEmp'
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'ta'
 GO

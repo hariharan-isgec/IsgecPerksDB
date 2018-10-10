@@ -8,7 +8,7 @@ CREATE VIEW [dbo].[ATN_TotEmp]
 AS
 SELECT        COUNT(*) AS TotEmp
 FROM            dbo.HRM_Employees
-WHERE        (ActiveState = 1) AND (C_DateOfJoining < CONVERT(DATETIME, '2018-09-01 00:00:00', 102))
+WHERE        (ActiveState = 1) AND (C_DateOfJoining < CONVERT(DATETIME, '2018-10-01 00:00:00', 102))
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
 Begin DesignProperties = 
