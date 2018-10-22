@@ -47,8 +47,8 @@ CREATE PROCEDURE [dbo].[sppakSitePkgDSelectListFilteres]
   SET @LGSQL = @LGSQL + '    AND [PAK_SitePkgD].[BOMNo] = [PAK_PkgListD6].[BOMNo]'
   SET @LGSQL = @LGSQL + '    AND [PAK_SitePkgD].[ItemNo] = [PAK_PkgListD6].[ItemNo]'
   SET @LGSQL = @LGSQL + '  INNER JOIN [PAK_PkgListH] AS [PAK_PkgListH7]'
-  SET @LGSQL = @LGSQL + '    ON [PAK_SitePkgD].[SerialNo] = [PAK_PkgListH7].[SerialNo]'
-  SET @LGSQL = @LGSQL + '    AND [PAK_SitePkgD].[PkgNo] = [PAK_PkgListH7].[PkgNo]'
+  --SET @LGSQL = @LGSQL + '    ON [PAK_SitePkgD].[SerialNo] = [PAK_PkgListH7].[SerialNo]'
+  SET @LGSQL = @LGSQL + '    ON [PAK_SitePkgD].[PkgNo] = [PAK_PkgListH7].[PkgNo]'
   SET @LGSQL = @LGSQL + '  INNER JOIN [PAK_PO] AS [PAK_PO8]'
   SET @LGSQL = @LGSQL + '    ON [PAK_SitePkgD].[SerialNo] = [PAK_PO8].[SerialNo]'
   SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [PAK_SiteItemMaster] AS [PAK_SiteItemMaster9]'
@@ -190,8 +190,8 @@ CREATE PROCEDURE [dbo].[sppakSitePkgDSelectListFilteres]
     AND [PAK_SitePkgD].[BOMNo] = [PAK_PkgListD6].[BOMNo]
     AND [PAK_SitePkgD].[ItemNo] = [PAK_PkgListD6].[ItemNo]
   INNER JOIN [PAK_PkgListH] AS [PAK_PkgListH7]
-    ON [PAK_SitePkgD].[SerialNo] = [PAK_PkgListH7].[SerialNo]
-    AND [PAK_SitePkgD].[PkgNo] = [PAK_PkgListH7].[PkgNo]
+    --ON [PAK_SitePkgD].[SerialNo] = [PAK_PkgListH7].[SerialNo]
+    ON [PAK_SitePkgD].[PkgNo] = [PAK_PkgListH7].[PkgNo]
   INNER JOIN [PAK_PO] AS [PAK_PO8]
     ON [PAK_SitePkgD].[SerialNo] = [PAK_PO8].[SerialNo]
   LEFT OUTER JOIN [PAK_SiteItemMaster] AS [PAK_SiteItemMaster9]

@@ -13,7 +13,7 @@ CREATE PROCEDURE [dbo].[sppakSitePkgDLocationUpdate]
   @SiteMarkNo NVarChar(30),
   @LocationID Int,
   @UOMQuantity Int,
-  @Quantity Decimal(18,2),
+  @Quantity Decimal(18,4),
   @Support Bit,
   @Remarks NVarChar(100),
   @RecSrNo Int,

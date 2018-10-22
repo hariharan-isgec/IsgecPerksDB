@@ -53,6 +53,19 @@ CREATE PROCEDURE [dbo].[sppakPOBItemsInsert]
   @Accepted Bit,
   @SupplierWeightPerUnit Decimal(18,4),
   @QualityClearedQty Decimal(18,4) = 0, 
+  @ItemReference NVarChar(200),
+  @SubItem NVarChar(9),
+  @SubItem2 NvarChar(150),
+  @SubItem3 NvarChar(150),
+  @SubItem4 NvarChar(150),
+  @QuantityDespatchedToPort Decimal(18,4),
+  @TotalWeightDespatchedToPort Decimal(18,4),
+  @QuantityReceivedAtPort Decimal(18,4) = 0, 
+  @TotalWeightReceivedAtPort Decimal(18,4) = 0, 
+  @QuantityDespatchedFromPort Decimal(18,4) = 0, 
+  @TotalWeightDespatchedfromPort Decimal(18,4) = 0, 
+  @QualityClearedQtyStage Decimal(18,4) = 0, 
+  @TotalWeight Decimal(18,4) = 0, 
   @Return_SerialNo Int = null OUTPUT, 
   @Return_BOMNo Int = null OUTPUT, 
   @Return_ItemNo Int = null OUTPUT 
@@ -107,6 +120,19 @@ CREATE PROCEDURE [dbo].[sppakPOBItemsInsert]
   ,[Accepted]
   ,[SupplierWeightPerUnit]
   ,[QualityClearedQty]
+  ,[ItemReference]
+  ,[SubItem]
+  ,[SubItem2]
+  ,[SubItem3]
+  ,[SubItem4]
+  ,[QuantityReceivedAtPort]
+  ,[TotalWeightReceivedAtPort]
+  ,[QuantityDespatchedFromPort]
+  ,[TotalWeightDespatchedFromPort]
+  ,[QuantityDespatchedToPort]
+  ,[TotalWeightDespatchedToPort]
+  ,[QualityClearedQtyStage]
+  ,[TotalWeight]
   )
   VALUES
   (
@@ -158,6 +184,19 @@ CREATE PROCEDURE [dbo].[sppakPOBItemsInsert]
   ,@Accepted
   ,@SupplierWeightPerUnit
   ,@QualityClearedQty
+  ,@ItemReference
+  ,@SubItem
+  ,@SubItem2
+  ,@SubItem3
+  ,@SubItem4
+  ,@QuantityReceivedAtPort
+  ,@TotalWeightReceivedAtPort
+  ,@QuantityDespatchedFromPort
+  ,@TotalWeightDespatchedFromPort
+  ,@QuantityDespatchedToPort
+  ,@TotalWeightDespatchedToPort
+  ,@QualityClearedQtyStage
+  ,@TotalWeight
   )
   SET @Return_SerialNo = @SerialNo
   SET @Return_BOMNo = @BOMNo

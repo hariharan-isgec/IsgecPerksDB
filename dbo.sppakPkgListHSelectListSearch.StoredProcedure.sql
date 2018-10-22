@@ -34,9 +34,20 @@ CREATE PROCEDURE [dbo].[sppakPkgListHSelectListSearch]
     ON [PAK_PkgListH].[VRExecutionNo] = [VR_RequestExecution5].[SRNNo]
   LEFT OUTER JOIN [PAK_PkgStatus] AS [PAK_PkgStatus6]
     ON [PAK_PkgListH].[StatusID] = [PAK_PkgStatus6].[StatusID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]
+    ON [PAK_PkgListH].[ReceivedAtPortBy] = [aspnet_users7].[LoginID]
+  LEFT OUTER JOIN [ELOG_Ports] AS [ELOG_Ports8]
+    ON [PAK_PkgListH].[PortID] = [ELOG_Ports8].[PortID]
+  LEFT OUTER JOIN [IDM_Projects] AS [IDM_Projects9]
+    ON [PAK_PkgListH].[ProjectID] = [IDM_Projects9].[ProjectID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users10]
+    ON [PAK_PkgListH].[VRConvertedBy] = [aspnet_users10].[LoginID]
  WHERE  
    ( 
          STR(ISNULL([PAK_PkgListH].[SerialNo], 0)) LIKE @KeyWord1
+     OR LOWER(ISNULL([PAK_PkgListH].[ReceivedAtPortBy],'')) LIKE @KeyWord1
+     OR STR(ISNULL([PAK_PkgListH].[PortID], 0)) LIKE @KeyWord1
+     OR LOWER(ISNULL([PAK_PkgListH].[ProjectID],'')) LIKE @KeyWord1
      OR STR(ISNULL([PAK_PkgListH].[PkgNo], 0)) LIKE @KeyWord1
      OR LOWER(ISNULL([PAK_PkgListH].[SupplierRefNo],'')) LIKE @KeyWord1
      OR LOWER(ISNULL([PAK_PkgListH].[TransporterID],'')) LIKE @KeyWord1
@@ -45,16 +56,24 @@ CREATE PROCEDURE [dbo].[sppakPkgListHSelectListSearch]
      OR LOWER(ISNULL([PAK_PkgListH].[GRNo],'')) LIKE @KeyWord1
      OR STR(ISNULL([PAK_PkgListH].[VRExecutionNo], 0)) LIKE @KeyWord1
      OR LOWER(ISNULL([PAK_PkgListH].[Remarks],'')) LIKE @KeyWord1
-     OR STR(ISNULL([PAK_PkgListH].[UOMTotalWeight], 0)) LIKE @KeyWord1
+     OR LOWER(ISNULL([PAK_PkgListH].[Additional2Info],'')) LIKE @KeyWord1
      OR STR(ISNULL([PAK_PkgListH].[TotalWeight], 0)) LIKE @KeyWord1
      OR STR(ISNULL([PAK_PkgListH].[StatusID], 0)) LIKE @KeyWord1
-     OR LOWER(ISNULL([PAK_PkgListH].[Additional2Info],'')) LIKE @KeyWord1
      OR LOWER(ISNULL([PAK_PkgListH].[Additional1Info],'')) LIKE @KeyWord1
      OR LOWER(ISNULL([PAK_PkgListH].[CreatedBy],'')) LIKE @KeyWord1
+     OR STR(ISNULL([PAK_PkgListH].[UOMTotalWeight], 0)) LIKE @KeyWord1
    ) 
   ORDER BY
      CASE @OrderBy WHEN 'SerialNo' THEN [PAK_PkgListH].[SerialNo] END,
      CASE @OrderBy WHEN 'SerialNo DESC' THEN [PAK_PkgListH].[SerialNo] END DESC,
+     CASE @OrderBy WHEN 'ReceivedAtPortOn' THEN [PAK_PkgListH].[ReceivedAtPortOn] END,
+     CASE @OrderBy WHEN 'ReceivedAtPortOn DESC' THEN [PAK_PkgListH].[ReceivedAtPortOn] END DESC,
+     CASE @OrderBy WHEN 'ReceivedAtPortBy' THEN [PAK_PkgListH].[ReceivedAtPortBy] END,
+     CASE @OrderBy WHEN 'ReceivedAtPortBy DESC' THEN [PAK_PkgListH].[ReceivedAtPortBy] END DESC,
+     CASE @OrderBy WHEN 'PortID' THEN [PAK_PkgListH].[PortID] END,
+     CASE @OrderBy WHEN 'PortID DESC' THEN [PAK_PkgListH].[PortID] END DESC,
+     CASE @OrderBy WHEN 'ProjectID' THEN [PAK_PkgListH].[ProjectID] END,
+     CASE @OrderBy WHEN 'ProjectID DESC' THEN [PAK_PkgListH].[ProjectID] END DESC,
      CASE @OrderBy WHEN 'PkgNo' THEN [PAK_PkgListH].[PkgNo] END,
      CASE @OrderBy WHEN 'PkgNo DESC' THEN [PAK_PkgListH].[PkgNo] END DESC,
      CASE @OrderBy WHEN 'SupplierRefNo' THEN [PAK_PkgListH].[SupplierRefNo] END,
@@ -73,20 +92,20 @@ CREATE PROCEDURE [dbo].[sppakPkgListHSelectListSearch]
      CASE @OrderBy WHEN 'VRExecutionNo DESC' THEN [PAK_PkgListH].[VRExecutionNo] END DESC,
      CASE @OrderBy WHEN 'Remarks' THEN [PAK_PkgListH].[Remarks] END,
      CASE @OrderBy WHEN 'Remarks DESC' THEN [PAK_PkgListH].[Remarks] END DESC,
-     CASE @OrderBy WHEN 'UOMTotalWeight' THEN [PAK_PkgListH].[UOMTotalWeight] END,
-     CASE @OrderBy WHEN 'UOMTotalWeight DESC' THEN [PAK_PkgListH].[UOMTotalWeight] END DESC,
+     CASE @OrderBy WHEN 'Additional2Info' THEN [PAK_PkgListH].[Additional2Info] END,
+     CASE @OrderBy WHEN 'Additional2Info DESC' THEN [PAK_PkgListH].[Additional2Info] END DESC,
      CASE @OrderBy WHEN 'TotalWeight' THEN [PAK_PkgListH].[TotalWeight] END,
      CASE @OrderBy WHEN 'TotalWeight DESC' THEN [PAK_PkgListH].[TotalWeight] END DESC,
      CASE @OrderBy WHEN 'StatusID' THEN [PAK_PkgListH].[StatusID] END,
      CASE @OrderBy WHEN 'StatusID DESC' THEN [PAK_PkgListH].[StatusID] END DESC,
-     CASE @OrderBy WHEN 'CreatedOn' THEN [PAK_PkgListH].[CreatedOn] END,
-     CASE @OrderBy WHEN 'CreatedOn DESC' THEN [PAK_PkgListH].[CreatedOn] END DESC,
-     CASE @OrderBy WHEN 'Additional2Info' THEN [PAK_PkgListH].[Additional2Info] END,
-     CASE @OrderBy WHEN 'Additional2Info DESC' THEN [PAK_PkgListH].[Additional2Info] END DESC,
      CASE @OrderBy WHEN 'Additional1Info' THEN [PAK_PkgListH].[Additional1Info] END,
      CASE @OrderBy WHEN 'Additional1Info DESC' THEN [PAK_PkgListH].[Additional1Info] END DESC,
+     CASE @OrderBy WHEN 'CreatedOn' THEN [PAK_PkgListH].[CreatedOn] END,
+     CASE @OrderBy WHEN 'CreatedOn DESC' THEN [PAK_PkgListH].[CreatedOn] END DESC,
      CASE @OrderBy WHEN 'CreatedBy' THEN [PAK_PkgListH].[CreatedBy] END,
      CASE @OrderBy WHEN 'CreatedBy DESC' THEN [PAK_PkgListH].[CreatedBy] END DESC,
+     CASE @OrderBy WHEN 'UOMTotalWeight' THEN [PAK_PkgListH].[UOMTotalWeight] END,
+     CASE @OrderBy WHEN 'UOMTotalWeight DESC' THEN [PAK_PkgListH].[UOMTotalWeight] END DESC,
      CASE @OrderBy WHEN 'aspnet_Users1_UserFullName' THEN [aspnet_Users1].[UserFullName] END,
      CASE @OrderBy WHEN 'aspnet_Users1_UserFullName DESC' THEN [aspnet_Users1].[UserFullName] END DESC,
      CASE @OrderBy WHEN 'PAK_PO2_PODescription' THEN [PAK_PO2].[PODescription] END,
@@ -98,7 +117,13 @@ CREATE PROCEDURE [dbo].[sppakPkgListHSelectListSearch]
      CASE @OrderBy WHEN 'VR_RequestExecution5_ExecutionDescription' THEN [VR_RequestExecution5].[ExecutionDescription] END,
      CASE @OrderBy WHEN 'VR_RequestExecution5_ExecutionDescription DESC' THEN [VR_RequestExecution5].[ExecutionDescription] END DESC,
      CASE @OrderBy WHEN 'PAK_PkgStatus6_Description' THEN [PAK_PkgStatus6].[Description] END,
-     CASE @OrderBy WHEN 'PAK_PkgStatus6_Description DESC' THEN [PAK_PkgStatus6].[Description] END DESC 
+     CASE @OrderBy WHEN 'PAK_PkgStatus6_Description DESC' THEN [PAK_PkgStatus6].[Description] END DESC,
+     CASE @OrderBy WHEN 'aspnet_Users7_UserFullName' THEN [aspnet_Users7].[UserFullName] END,
+     CASE @OrderBy WHEN 'aspnet_Users7_UserFullName DESC' THEN [aspnet_Users7].[UserFullName] END DESC,
+     CASE @OrderBy WHEN 'ELOG_Ports8_Description' THEN [ELOG_Ports8].[Description] END,
+     CASE @OrderBy WHEN 'ELOG_Ports8_Description DESC' THEN [ELOG_Ports8].[Description] END DESC,
+     CASE @OrderBy WHEN 'IDM_Projects9_Description' THEN [IDM_Projects9].[Description] END,
+     CASE @OrderBy WHEN 'IDM_Projects9_Description DESC' THEN [IDM_Projects9].[Description] END DESC 
 
     SET @RecordCount = @@RowCount
 
@@ -109,7 +134,11 @@ CREATE PROCEDURE [dbo].[sppakPkgListHSelectListSearch]
     [PAK_Units3].[Description] AS PAK_Units3_Description,
     [VR_BusinessPartner4].[BPName] AS VR_BusinessPartner4_BPName,
     [VR_RequestExecution5].[ExecutionDescription] AS VR_RequestExecution5_ExecutionDescription,
-    [PAK_PkgStatus6].[Description] AS PAK_PkgStatus6_Description 
+    [PAK_PkgStatus6].[Description] AS PAK_PkgStatus6_Description,
+    [aspnet_Users7].[UserFullName] AS aspnet_Users7_UserFullName,
+    [ELOG_Ports8].[Description] AS ELOG_Ports8_Description,
+    [IDM_Projects9].[Description] AS IDM_Projects9_Description,
+    [aspnet_Users10].[UserFullName] AS aspnet_Users10_UserFullName 
   FROM [PAK_PkgListH] 
       INNER JOIN #PageIndex
           ON [PAK_PkgListH].[SerialNo] = #PageIndex.SerialNo
@@ -126,6 +155,14 @@ CREATE PROCEDURE [dbo].[sppakPkgListHSelectListSearch]
     ON [PAK_PkgListH].[VRExecutionNo] = [VR_RequestExecution5].[SRNNo]
   LEFT OUTER JOIN [PAK_PkgStatus] AS [PAK_PkgStatus6]
     ON [PAK_PkgListH].[StatusID] = [PAK_PkgStatus6].[StatusID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]
+    ON [PAK_PkgListH].[ReceivedAtPortBy] = [aspnet_users7].[LoginID]
+  LEFT OUTER JOIN [ELOG_Ports] AS [ELOG_Ports8]
+    ON [PAK_PkgListH].[PortID] = [ELOG_Ports8].[PortID]
+  LEFT OUTER JOIN [IDM_Projects] AS [IDM_Projects9]
+    ON [PAK_PkgListH].[ProjectID] = [IDM_Projects9].[ProjectID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users10]
+    ON [PAK_PkgListH].[VRConvertedBy] = [aspnet_users10].[LoginID]
   WHERE
         #PageIndex.IndexID > @StartRowIndex
         AND #PageIndex.IndexID < (@StartRowIndex + @MaximumRows + 1)

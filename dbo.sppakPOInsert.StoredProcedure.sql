@@ -28,6 +28,9 @@ CREATE PROCEDURE [dbo].[sppakPOInsert]
   @QCRequired Bit = 0,
   @AcceptedBySupplier Bit = 0,
   @AcceptedBySupplierOn DateTime = NULL,
+  @POWeight as Decimal(18,4) = 0,
+  @PortRequired Bit = 0,
+  @PortID Int,
   @Return_SerialNo Int = null OUTPUT 
   AS
   INSERT [PAK_PO]
@@ -55,6 +58,9 @@ CREATE PROCEDURE [dbo].[sppakPOInsert]
   ,[QCRequired]
   ,[AcceptedBySupplier]
   ,[AcceptedBySupplierOn]
+  ,[POWeight]
+  ,[PortRequired]
+  ,[PortID]
   )
   VALUES
   (
@@ -81,6 +87,9 @@ CREATE PROCEDURE [dbo].[sppakPOInsert]
   ,@QCRequired 
   ,@AcceptedBySupplier
   ,@AcceptedBySupplierOn
+  ,@POWeight
+  ,@PortRequired
+  ,@PortID
   )
   SET @Return_SerialNo = Scope_Identity()
 GO

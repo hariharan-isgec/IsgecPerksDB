@@ -46,6 +46,7 @@ CREATE TABLE [dbo].[QCM_Requests](
 	[PausedHrs] [decimal](18, 2) NOT NULL,
 	[TotalHrs] [decimal](18, 2) NOT NULL,
 	[LastPausedOn] [datetime] NULL,
+	[POWeight] [decimal](18, 4) NOT NULL,
  CONSTRAINT [PK_QCM_Requests] PRIMARY KEY CLUSTERED 
 (
 	[RequestID] ASC
@@ -123,4 +124,6 @@ GO
 ALTER TABLE [dbo].[QCM_Requests] ADD  CONSTRAINT [DF_QCM_Requests_PausedHrs]  DEFAULT ((0)) FOR [PausedHrs]
 GO
 ALTER TABLE [dbo].[QCM_Requests] ADD  CONSTRAINT [DF_QCM_Requests_TotalHrs]  DEFAULT ((0)) FOR [TotalHrs]
+GO
+ALTER TABLE [dbo].[QCM_Requests] ADD  CONSTRAINT [DF_QCM_Requests_POWeight]  DEFAULT ((0)) FOR [POWeight]
 GO

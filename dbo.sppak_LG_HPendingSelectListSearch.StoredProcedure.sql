@@ -24,7 +24,7 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListSearch]
   SELECT [PAK_PkgListH].[SerialNo], [PAK_PkgListH].[PkgNo] FROM [PAK_PkgListH]
   LEFT OUTER JOIN [aspnet_users] AS [aspnet_users1]
     ON [PAK_PkgListH].[CreatedBy] = [aspnet_users1].[LoginID]
-  INNER JOIN [PAK_PO] AS [PAK_PO2]
+  LEFT OUTER JOIN [PAK_PO] AS [PAK_PO2]
     ON [PAK_PkgListH].[SerialNo] = [PAK_PO2].[SerialNo]
   LEFT OUTER JOIN [PAK_Units] AS [PAK_Units3]
     ON [PAK_PkgListH].[UOMTotalWeight] = [PAK_Units3].[UnitID]
@@ -34,7 +34,9 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListSearch]
     ON [PAK_PkgListH].[VRExecutionNo] = [VR_RequestExecution5].[SRNNo]
   LEFT OUTER JOIN [PAK_PkgStatus] AS [PAK_PkgStatus6]
     ON [PAK_PkgListH].[StatusID] = [PAK_PkgStatus6].[StatusID]
-   WHERE [PAK_PO2].[ProjectID] IN (SELECT PROJECTID from PAK_SiteUserProjects Where UserID =@LoginID) 
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]
+      ON [PAK_PkgListH].[ReceivedAtPortBy] = [aspnet_users7].[LoginID]
+   WHERE [PAK_PkgListH].[ProjectID] IN (SELECT PROJECTID from PAK_SiteUserProjects Where UserID =@LoginID) 
          AND [PAK_PkgListH].[StatusID] = 3 
      AND ( 
          STR(ISNULL([PAK_PkgListH].[SerialNo], 0)) LIKE @KeyWord1
@@ -82,6 +84,10 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListSearch]
      CASE @OrderBy WHEN 'Additional1Info DESC' THEN [PAK_PkgListH].[Additional1Info] END DESC,
      CASE @OrderBy WHEN 'CreatedOn' THEN [PAK_PkgListH].[CreatedOn] END,
      CASE @OrderBy WHEN 'CreatedOn DESC' THEN [PAK_PkgListH].[CreatedOn] END DESC,
+     CASE @OrderBy WHEN 'ReceivedAtPortBy' THEN [PAK_PkgListH].[ReceivedAtPortBy] END,
+     CASE @OrderBy WHEN 'ReceivedAtPortBy DESC' THEN [PAK_PkgListH].[ReceivedAtPortBy] END DESC,
+     CASE @OrderBy WHEN 'ReceivedAtPortOn' THEN [PAK_PkgListH].[ReceivedAtPortOn] END,
+     CASE @OrderBy WHEN 'ReceivedAtPortOn DESC' THEN [PAK_PkgListH].[ReceivedAtPortOn] END DESC,
      CASE @OrderBy WHEN 'TotalWeight' THEN [PAK_PkgListH].[TotalWeight] END,
      CASE @OrderBy WHEN 'TotalWeight DESC' THEN [PAK_PkgListH].[TotalWeight] END DESC,
      CASE @OrderBy WHEN 'UOMTotalWeight' THEN [PAK_PkgListH].[UOMTotalWeight] END,
@@ -105,6 +111,7 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListSearch]
 
   SELECT
     [PAK_PkgListH].* ,
+    [aspnet_Users7].[UserFullName] AS aspnet_Users7_UserFullName,
     [aspnet_Users1].[UserFullName] AS aspnet_Users1_UserFullName,
     [PAK_PO2].[PODescription] AS PAK_PO2_PODescription,
     [PAK_Units3].[Description] AS PAK_Units3_Description,
@@ -117,7 +124,7 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListSearch]
           AND [PAK_PkgListH].[PkgNo] = #PageIndex.PkgNo
   LEFT OUTER JOIN [aspnet_users] AS [aspnet_users1]
     ON [PAK_PkgListH].[CreatedBy] = [aspnet_users1].[LoginID]
-  INNER JOIN [PAK_PO] AS [PAK_PO2]
+  LEFT OUTER JOIN [PAK_PO] AS [PAK_PO2]
     ON [PAK_PkgListH].[SerialNo] = [PAK_PO2].[SerialNo]
   LEFT OUTER JOIN [PAK_Units] AS [PAK_Units3]
     ON [PAK_PkgListH].[UOMTotalWeight] = [PAK_Units3].[UnitID]
@@ -127,6 +134,8 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListSearch]
     ON [PAK_PkgListH].[VRExecutionNo] = [VR_RequestExecution5].[SRNNo]
   LEFT OUTER JOIN [PAK_PkgStatus] AS [PAK_PkgStatus6]
     ON [PAK_PkgListH].[StatusID] = [PAK_PkgStatus6].[StatusID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]
+      ON [PAK_PkgListH].[ReceivedAtPortBy] = [aspnet_users7].[LoginID]
   WHERE
         #PageIndex.IndexID > @StartRowIndex
         AND #PageIndex.IndexID < (@StartRowIndex + @MaximumRows + 1)

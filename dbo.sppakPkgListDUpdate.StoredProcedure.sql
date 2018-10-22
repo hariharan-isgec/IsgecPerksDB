@@ -31,6 +31,7 @@ CREATE PROCEDURE [dbo].[sppakPkgListDUpdate]
   @PackingMark NVarChar(50),
   @DocumentNo NVarChar(50),
   @DocumentRevision NVarChar(10),
+  @SourcePkgNo Int,
   @RowCount int = null OUTPUT
   AS
   UPDATE [PAK_PkgListD] SET 
@@ -56,6 +57,7 @@ CREATE PROCEDURE [dbo].[sppakPkgListDUpdate]
   ,[PackingMark] = @PackingMark
   ,[DocumentNo] = @DocumentNo
   ,[DocumentRevision] = @DocumentRevision
+  ,[SourcePkgNo] = @SourcePkgNo 
   WHERE
   [SerialNo] = @Original_SerialNo
   AND [PkgNo] = @Original_PkgNo

@@ -27,6 +27,7 @@ CREATE TABLE [dbo].[PAK_PkgListD](
 	[TotalWeightReceived] [decimal](18, 4) NOT NULL,
 	[DocumentNo] [nvarchar](50) NULL,
 	[DocumentRevision] [nvarchar](10) NULL,
+	[SourcePkgNo] [int] NULL,
  CONSTRAINT [PK_PAK_PkgListD] PRIMARY KEY CLUSTERED 
 (
 	[SerialNo] ASC,
@@ -51,10 +52,10 @@ REFERENCES [dbo].[PAK_PakTypes] ([PackTypeID])
 GO
 ALTER TABLE [dbo].[PAK_PkgListD] CHECK CONSTRAINT [FK_PAK_PkgListD_PackTypeID]
 GO
-ALTER TABLE [dbo].[PAK_PkgListD]  WITH CHECK ADD  CONSTRAINT [FK_PAK_PkgListD_PkgNo] FOREIGN KEY([SerialNo], [PkgNo])
+ALTER TABLE [dbo].[PAK_PkgListD]  WITH NOCHECK ADD  CONSTRAINT [FK_PAK_PkgListD_PkgNo] FOREIGN KEY([SerialNo], [PkgNo])
 REFERENCES [dbo].[PAK_PkgListH] ([SerialNo], [PkgNo])
 GO
-ALTER TABLE [dbo].[PAK_PkgListD] CHECK CONSTRAINT [FK_PAK_PkgListD_PkgNo]
+ALTER TABLE [dbo].[PAK_PkgListD] NOCHECK CONSTRAINT [FK_PAK_PkgListD_PkgNo]
 GO
 ALTER TABLE [dbo].[PAK_PkgListD]  WITH CHECK ADD  CONSTRAINT [FK_PAK_PkgListD_SerialNo] FOREIGN KEY([SerialNo])
 REFERENCES [dbo].[PAK_PO] ([SerialNo])

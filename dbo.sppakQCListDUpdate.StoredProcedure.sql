@@ -10,36 +10,38 @@ CREATE PROCEDURE [dbo].[sppakQCListDUpdate]
   @Original_BOMNo Int, 
   @Original_ItemNo Int, 
   @SerialNo Int,
+  @TotalWeight Decimal(18,4),
+  @QualityClearedWt Decimal(18,4),
+  @InspectionStageID Int,
   @QCLNo Int,
   @BOMNo Int,
   @ItemNo Int,
   @UOMQuantity Int,
   @Quantity Decimal(18,4),
-  @UOMWeight Int,
-  @WeightPerUnit Decimal(18,4),
-  @TotalWeight Decimal(18,4),
-  @QualityClearedWt Decimal(18,4),
-  @QualityClearedQty Decimal(18,4),
-  @Remarks NVarChar(500),
-  @ClearedBy NVarChar(8),
   @ClearedOn DateTime,
+  @WeightPerUnit Decimal(18,4),
+  @QualityClearedQty Decimal(18,4),
+  @UOMWeight Int,
+  @ClearedBy NVarChar(8),
+  @Remarks NVarChar(500),
   @RowCount int = null OUTPUT
   AS
   UPDATE [PAK_QCListD] SET 
    [SerialNo] = @SerialNo
+  ,[TotalWeight] = @TotalWeight
+  ,[QualityClearedWt] = @QualityClearedWt
+  ,[InspectionStageID] = @InspectionStageID
   ,[QCLNo] = @QCLNo
   ,[BOMNo] = @BOMNo
   ,[ItemNo] = @ItemNo
   ,[UOMQuantity] = @UOMQuantity
   ,[Quantity] = @Quantity
-  ,[UOMWeight] = @UOMWeight
+  ,[ClearedOn] = @ClearedOn
   ,[WeightPerUnit] = @WeightPerUnit
   ,[QualityClearedQty] = @QualityClearedQty
-  ,[Remarks] = @Remarks
+  ,[UOMWeight] = @UOMWeight
   ,[ClearedBy] = @ClearedBy
-  ,[ClearedOn] = @ClearedOn
-  ,[TotalWeight]=@TotalWeight
-  ,[QualityClearedWt]=@QualityClearedWt
+  ,[Remarks] = @Remarks
   WHERE
   [SerialNo] = @Original_SerialNo
   AND [QCLNo] = @Original_QCLNo

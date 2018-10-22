@@ -46,6 +46,7 @@ CREATE PROCEDURE [dbo].[spqcmRequestsUpdate]
   @PausedHrs Decimal(18,2) = 0.00,
   @TotalHrs Decimal(18,2) = 0.00,
   @LastPausedOn DateTime = NULL,
+  @POWeight Decimal(18,4) = 0,
   @RowCount int = null OUTPUT
   AS
   UPDATE [QCM_Requests] SET 
@@ -89,6 +90,7 @@ CREATE PROCEDURE [dbo].[spqcmRequestsUpdate]
   ,[PausedHrs] = @PausedHrs
   ,[TotalHrs] = @TotalHrs 
   ,[LastPausedOn] = @LastPausedOn
+  ,[POWeight] = @POWeight 
   WHERE
   [RequestID] = @Original_RequestID
   SET @RowCount = @@RowCount

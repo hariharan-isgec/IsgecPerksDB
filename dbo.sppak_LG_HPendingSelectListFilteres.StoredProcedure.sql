@@ -29,7 +29,7 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListFilteres]
   SET @LGSQL = @LGSQL + ' FROM [PAK_PkgListH] '
   SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users1]'
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListH].[CreatedBy] = [aspnet_users1].[LoginID]'
-  SET @LGSQL = @LGSQL + '  INNER JOIN [PAK_PO] AS [PAK_PO2]'
+  SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [PAK_PO] AS [PAK_PO2]'
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListH].[SerialNo] = [PAK_PO2].[SerialNo]'
   SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [PAK_Units] AS [PAK_Units3]'
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListH].[UOMTotalWeight] = [PAK_Units3].[UnitID]'
@@ -39,8 +39,10 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListFilteres]
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListH].[VRExecutionNo] = [VR_RequestExecution5].[SRNNo]'
   SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [PAK_PkgStatus] AS [PAK_PkgStatus6]'
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListH].[StatusID] = [PAK_PkgStatus6].[StatusID]'
+  SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]'
+  SET @LGSQL = @LGSQL + '    ON [PAK_PkgListH].[ReceivedAtPortBy] = [aspnet_users7].[LoginID]'
   --SET @LGSQL = @LGSQL + '  WHERE 1=1 '
-  SET @LGSQL = @LGSQL + '  WHERE [PAK_PO2].[ProjectID] IN (SELECT PROJECTID from PAK_SiteUserProjects Where UserID =''' + @LoginID + ''' ) '
+  SET @LGSQL = @LGSQL + '  WHERE [PAK_PkgListH].[ProjectID] IN (SELECT PROJECTID from PAK_SiteUserProjects Where UserID =''' + @LoginID + ''' ) '
   SET @LGSQL = @LGSQL + '  AND [PAK_PkgListH].[StatusID] = 3 ' --Despatched
   IF (@Filter_SerialNo > 0) 
     SET @LGSQL = @LGSQL + ' AND [PAK_PkgListH].[SerialNo] = ' + STR(@Filter_SerialNo)
@@ -68,6 +70,10 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListFilteres]
                         WHEN 'Remarks DESC' THEN '[PAK_PkgListH].[Remarks] DESC'
                         WHEN 'CreatedBy' THEN '[PAK_PkgListH].[CreatedBy]'
                         WHEN 'CreatedBy DESC' THEN '[PAK_PkgListH].[CreatedBy] DESC'
+                        WHEN 'ReceivedAtPortBy' THEN '[PAK_PkgListH].[ReceivedAtPortBy]'
+                        WHEN 'ReceivedAtPortBy DESC' THEN '[PAK_PkgListH].[ReceivedAtPortBy] DESC'
+                        WHEN 'ReceivedAtPortOn' THEN '[PAK_PkgListH].[ReceivedAtPortOn]'
+                        WHEN 'ReceivedAtPortOn DESC' THEN '[PAK_PkgListH].[ReceivedAtPortOn] DESC'
                         WHEN 'Additional2Info' THEN '[PAK_PkgListH].[Additional2Info]'
                         WHEN 'Additional2Info DESC' THEN '[PAK_PkgListH].[Additional2Info] DESC'
                         WHEN 'Additional1Info' THEN '[PAK_PkgListH].[Additional1Info]'
@@ -100,6 +106,7 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListFilteres]
 
   SELECT
     [PAK_PkgListH].* ,
+    [aspnet_Users7].[UserFullName] AS aspnet_Users7_UserFullName,
     [aspnet_Users1].[UserFullName] AS aspnet_Users1_UserFullName,
     [PAK_PO2].[PODescription] AS PAK_PO2_PODescription,
     [PAK_Units3].[Description] AS PAK_Units3_Description,
@@ -112,7 +119,7 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListFilteres]
           AND [PAK_PkgListH].[PkgNo] = #PageIndex.PkgNo
   LEFT OUTER JOIN [aspnet_users] AS [aspnet_users1]
     ON [PAK_PkgListH].[CreatedBy] = [aspnet_users1].[LoginID]
-  INNER JOIN [PAK_PO] AS [PAK_PO2]
+  LEFT OUTER JOIN [PAK_PO] AS [PAK_PO2]
     ON [PAK_PkgListH].[SerialNo] = [PAK_PO2].[SerialNo]
   LEFT OUTER JOIN [PAK_Units] AS [PAK_Units3]
     ON [PAK_PkgListH].[UOMTotalWeight] = [PAK_Units3].[UnitID]
@@ -122,6 +129,8 @@ CREATE PROCEDURE [dbo].[sppak_LG_HPendingSelectListFilteres]
     ON [PAK_PkgListH].[VRExecutionNo] = [VR_RequestExecution5].[SRNNo]
   LEFT OUTER JOIN [PAK_PkgStatus] AS [PAK_PkgStatus6]
     ON [PAK_PkgListH].[StatusID] = [PAK_PkgStatus6].[StatusID]
+  LEFT OUTER JOIN [aspnet_users] AS [aspnet_users7]
+      ON [PAK_PkgListH].[ReceivedAtPortBy] = [aspnet_users7].[LoginID]
   WHERE
         #PageIndex.IndexID > @StartRowIndex
         AND #PageIndex.IndexID < (@StartRowIndex + @MaximumRows + 1)

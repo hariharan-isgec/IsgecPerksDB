@@ -44,7 +44,7 @@ CREATE TABLE [dbo].[PAK_POBOM](
 	[Free] [bit] NOT NULL,
 	[ItemLevel] [int] NOT NULL,
 	[Prefix] [nvarchar](1000) NULL,
-	[QualityClearedQty] [decimal](18, 4) NOT NULL,
+	[QualityClearedQty] [decimal](18, 4) NULL,
  CONSTRAINT [PK_PAK_POBOM] PRIMARY KEY CLUSTERED 
 (
 	[SerialNo] ASC,
@@ -134,6 +134,4 @@ GO
 ALTER TABLE [dbo].[PAK_POBOM] ADD  CONSTRAINT [DF_PAK_POBOM_Free]  DEFAULT ((0)) FOR [Free]
 GO
 ALTER TABLE [dbo].[PAK_POBOM] ADD  CONSTRAINT [DF_PAK_POBOM_ItemLevel]  DEFAULT ((0)) FOR [ItemLevel]
-GO
-ALTER TABLE [dbo].[PAK_POBOM] ADD  CONSTRAINT [DF_PAK_POBOM_QualityClearedQty]  DEFAULT ((0)) FOR [QualityClearedQty]
 GO

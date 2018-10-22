@@ -19,6 +19,7 @@ CREATE TABLE [dbo].[PAK_QCListD](
 	[Remarks] [nvarchar](500) NULL,
 	[ClearedBy] [nvarchar](8) NULL,
 	[ClearedOn] [datetime] NULL,
+	[InspectionStageID] [int] NULL,
  CONSTRAINT [PK_PAK_QCListD] PRIMARY KEY CLUSTERED 
 (
 	[SerialNo] ASC,
@@ -37,6 +38,11 @@ ALTER TABLE [dbo].[PAK_QCListD]  WITH CHECK ADD  CONSTRAINT [FK_PAK_QCListD_Crea
 REFERENCES [dbo].[aspnet_users] ([LoginID])
 GO
 ALTER TABLE [dbo].[PAK_QCListD] CHECK CONSTRAINT [FK_PAK_QCListD_CreatedBy]
+GO
+ALTER TABLE [dbo].[PAK_QCListD]  WITH CHECK ADD  CONSTRAINT [FK_PAK_QCListD_InspectionStageID] FOREIGN KEY([InspectionStageID])
+REFERENCES [dbo].[QCM_InspectionStages] ([InspectionStageID])
+GO
+ALTER TABLE [dbo].[PAK_QCListD] CHECK CONSTRAINT [FK_PAK_QCListD_InspectionStageID]
 GO
 ALTER TABLE [dbo].[PAK_QCListD]  WITH CHECK ADD  CONSTRAINT [FK_PAK_QCListD_ItemNo] FOREIGN KEY([SerialNo], [BOMNo], [ItemNo])
 REFERENCES [dbo].[PAK_POBItems] ([SerialNo], [BOMNo], [ItemNo])

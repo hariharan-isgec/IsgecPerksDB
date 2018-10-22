@@ -52,6 +52,8 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectListFilteres]
   SET @LGSQL = @LGSQL + '    ON [PAK_QCListD].[UOMQuantity] = [PAK_Units6].[UnitID]'
   SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [PAK_Units] AS [PAK_Units7]'
   SET @LGSQL = @LGSQL + '    ON [PAK_QCListD].[UOMWeight] = [PAK_Units7].[UnitID]'
+  SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [QCM_InspectionStages] AS [QCM_InspectionStages8]'
+  SET @LGSQL = @LGSQL + '    ON [PAK_QCListD].[InspectionStageID] = [QCM_InspectionStages8].[InspectionStageID]'
   SET @LGSQL = @LGSQL + '  WHERE 1 = 1 '
   IF (@Filter_SerialNo > 0) 
     SET @LGSQL = @LGSQL + ' AND [PAK_QCListD].[SerialNo] = ' + STR(@Filter_SerialNo)
@@ -61,6 +63,12 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectListFilteres]
   SET @LGSQL = @LGSQL + CASE @OrderBy
                         WHEN 'SerialNo' THEN '[PAK_QCListD].[SerialNo]'
                         WHEN 'SerialNo DESC' THEN '[PAK_QCListD].[SerialNo] DESC'
+                        WHEN 'TotalWeight' THEN '[PAK_QCListD].[TotalWeight]'
+                        WHEN 'TotalWeight DESC' THEN '[PAK_QCListD].[TotalWeight] DESC'
+                        WHEN 'QualityClearedWt' THEN '[PAK_QCListD].[QualityClearedWt]'
+                        WHEN 'QualityClearedWt DESC' THEN '[PAK_QCListD].[QualityClearedWt] DESC'
+                        WHEN 'InspectionStageID' THEN '[PAK_QCListD].[InspectionStageID]'
+                        WHEN 'InspectionStageID DESC' THEN '[PAK_QCListD].[InspectionStageID] DESC'
                         WHEN 'QCLNo' THEN '[PAK_QCListD].[QCLNo]'
                         WHEN 'QCLNo DESC' THEN '[PAK_QCListD].[QCLNo] DESC'
                         WHEN 'BOMNo' THEN '[PAK_QCListD].[BOMNo]'
@@ -71,18 +79,18 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectListFilteres]
                         WHEN 'UOMQuantity DESC' THEN '[PAK_QCListD].[UOMQuantity] DESC'
                         WHEN 'Quantity' THEN '[PAK_QCListD].[Quantity]'
                         WHEN 'Quantity DESC' THEN '[PAK_QCListD].[Quantity] DESC'
-                        WHEN 'UOMWeight' THEN '[PAK_QCListD].[UOMWeight]'
-                        WHEN 'UOMWeight DESC' THEN '[PAK_QCListD].[UOMWeight] DESC'
+                        WHEN 'ClearedOn' THEN '[PAK_QCListD].[ClearedOn]'
+                        WHEN 'ClearedOn DESC' THEN '[PAK_QCListD].[ClearedOn] DESC'
                         WHEN 'WeightPerUnit' THEN '[PAK_QCListD].[WeightPerUnit]'
                         WHEN 'WeightPerUnit DESC' THEN '[PAK_QCListD].[WeightPerUnit] DESC'
                         WHEN 'QualityClearedQty' THEN '[PAK_QCListD].[QualityClearedQty]'
                         WHEN 'QualityClearedQty DESC' THEN '[PAK_QCListD].[QualityClearedQty] DESC'
-                        WHEN 'Remarks' THEN '[PAK_QCListD].[Remarks]'
-                        WHEN 'Remarks DESC' THEN '[PAK_QCListD].[Remarks] DESC'
+                        WHEN 'UOMWeight' THEN '[PAK_QCListD].[UOMWeight]'
+                        WHEN 'UOMWeight DESC' THEN '[PAK_QCListD].[UOMWeight] DESC'
                         WHEN 'ClearedBy' THEN '[PAK_QCListD].[ClearedBy]'
                         WHEN 'ClearedBy DESC' THEN '[PAK_QCListD].[ClearedBy] DESC'
-                        WHEN 'ClearedOn' THEN '[PAK_QCListD].[ClearedOn]'
-                        WHEN 'ClearedOn DESC' THEN '[PAK_QCListD].[ClearedOn] DESC'
+                        WHEN 'Remarks' THEN '[PAK_QCListD].[Remarks]'
+                        WHEN 'Remarks DESC' THEN '[PAK_QCListD].[Remarks] DESC'
                         WHEN 'aspnet_Users1_UserFullName' THEN '[aspnet_Users1].[UserFullName]'
                         WHEN 'aspnet_Users1_UserFullName DESC' THEN '[aspnet_Users1].[UserFullName] DESC'
                         WHEN 'PAK_PO2_PODescription' THEN '[PAK_PO2].[PODescription]'
@@ -97,6 +105,8 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectListFilteres]
                         WHEN 'PAK_Units6_Description DESC' THEN '[PAK_Units6].[Description] DESC'
                         WHEN 'PAK_Units7_Description' THEN '[PAK_Units7].[Description]'
                         WHEN 'PAK_Units7_Description DESC' THEN '[PAK_Units7].[Description] DESC'
+                        WHEN 'QCM_InspectionStages8_Description' THEN '[QCM_InspectionStages8].[Description]'
+                        WHEN 'QCM_InspectionStages8_Description DESC' THEN '[QCM_InspectionStages8].[Description] DESC'
                         ELSE '[PAK_QCListD].[SerialNo],[PAK_QCListD].[QCLNo],[PAK_QCListD].[BOMNo],[PAK_QCListD].[ItemNo]'
                     END
   EXEC (@LGSQL)
@@ -111,7 +121,8 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectListFilteres]
     [PAK_POBOM4].[ItemDescription] AS PAK_POBOM4_ItemDescription,
     [PAK_QCListH5].[SupplierRef] AS PAK_QCListH5_SupplierRef,
     [PAK_Units6].[Description] AS PAK_Units6_Description,
-    [PAK_Units7].[Description] AS PAK_Units7_Description 
+    [PAK_Units7].[Description] AS PAK_Units7_Description,
+    [QCM_InspectionStages8].[Description] AS QCM_InspectionStages8_Description 
   FROM [PAK_QCListD] 
       INNER JOIN #PageIndex
           ON [PAK_QCListD].[SerialNo] = #PageIndex.SerialNo
@@ -136,6 +147,8 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectListFilteres]
     ON [PAK_QCListD].[UOMQuantity] = [PAK_Units6].[UnitID]
   LEFT OUTER JOIN [PAK_Units] AS [PAK_Units7]
     ON [PAK_QCListD].[UOMWeight] = [PAK_Units7].[UnitID]
+  LEFT OUTER JOIN [QCM_InspectionStages] AS [QCM_InspectionStages8]
+    ON [PAK_QCListD].[InspectionStageID] = [QCM_InspectionStages8].[InspectionStageID]
   WHERE
         #PageIndex.IndexID > @StartRowIndex
         AND #PageIndex.IndexID < (@StartRowIndex + @MaximumRows + 1)

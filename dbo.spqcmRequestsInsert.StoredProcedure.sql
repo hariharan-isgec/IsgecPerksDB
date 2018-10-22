@@ -45,6 +45,7 @@ CREATE PROCEDURE [dbo].[spqcmRequestsInsert]
   @PausedHrs Decimal(18,2) = 0.00,
   @TotalHrs Decimal(18,2) = 0.00,
   @LastPausedOn DateTime = NULL,
+  @POWeight Decimal(18,4)=0,
   @Return_RequestID Int = null OUTPUT 
   AS
   INSERT [QCM_Requests]
@@ -89,6 +90,7 @@ CREATE PROCEDURE [dbo].[spqcmRequestsInsert]
   ,[PausedHrs]
   ,[TotalHrs]
   ,[LastPausedOn]
+  ,[POWeight]
   )
   VALUES
   (
@@ -132,6 +134,7 @@ CREATE PROCEDURE [dbo].[spqcmRequestsInsert]
   ,@PausedHrs
   ,@TotalHrs
   ,@LastPausedOn 
+  ,@POWeight
   )
   SET @Return_RequestID = Scope_Identity()
 GO

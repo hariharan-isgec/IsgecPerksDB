@@ -29,6 +29,9 @@ CREATE TABLE [dbo].[PAK_PO](
 	[QCRequired] [bit] NOT NULL,
 	[AcceptedBySupplier] [bit] NOT NULL,
 	[AcceptedBySupplierOn] [datetime] NULL,
+	[POWeight] [decimal](18, 4) NOT NULL,
+	[PORTRequired] [bit] NOT NULL,
+	[PortID] [int] NULL,
  CONSTRAINT [PK_PAK_PO] PRIMARY KEY CLUSTERED 
 (
 	[SerialNo] ASC
@@ -60,6 +63,11 @@ REFERENCES [dbo].[PAK_Reasons] ([ReasonID])
 GO
 ALTER TABLE [dbo].[PAK_PO] CHECK CONSTRAINT [FK_PAK_PO_IssueReasonID]
 GO
+ALTER TABLE [dbo].[PAK_PO]  WITH CHECK ADD  CONSTRAINT [FK_PAK_PO_PortID] FOREIGN KEY([PortID])
+REFERENCES [dbo].[ELOG_Ports] ([PortID])
+GO
+ALTER TABLE [dbo].[PAK_PO] CHECK CONSTRAINT [FK_PAK_PO_PortID]
+GO
 ALTER TABLE [dbo].[PAK_PO]  WITH CHECK ADD  CONSTRAINT [FK_PAK_PO_POStatusID] FOREIGN KEY([POStatusID])
 REFERENCES [dbo].[PAK_POStatus] ([StatusID])
 GO
@@ -85,4 +93,8 @@ GO
 ALTER TABLE [dbo].[PAK_PO] ADD  CONSTRAINT [DF_PAK_PO_QCRequired]  DEFAULT ((0)) FOR [QCRequired]
 GO
 ALTER TABLE [dbo].[PAK_PO] ADD  CONSTRAINT [DF_PAK_PO_AcceptedBySupplier]  DEFAULT ((0)) FOR [AcceptedBySupplier]
+GO
+ALTER TABLE [dbo].[PAK_PO] ADD  CONSTRAINT [DF_PAK_PO_POWeight]  DEFAULT ((0)) FOR [POWeight]
+GO
+ALTER TABLE [dbo].[PAK_PO] ADD  CONSTRAINT [DF_PAK_PO_PORTRequired]  DEFAULT ((0)) FOR [PORTRequired]
 GO

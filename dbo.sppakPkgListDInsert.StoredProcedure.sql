@@ -27,6 +27,7 @@ CREATE PROCEDURE [dbo].[sppakPkgListDInsert]
   @PackingMark NVarChar(50),
   @DocumentNo NVarChar(50),
   @DocumentRevision NVarChar(10),
+  @SourcePkgNo Int,
   @Return_SerialNo Int = null OUTPUT, 
   @Return_PkgNo Int = null OUTPUT, 
   @Return_BOMNo Int = null OUTPUT, 
@@ -56,6 +57,7 @@ CREATE PROCEDURE [dbo].[sppakPkgListDInsert]
   ,[PackingMark]
   ,[DocumentNo]
   ,[DocumentRevision]
+  ,[SourcePkgNo]
   )
   VALUES
   (
@@ -81,6 +83,7 @@ CREATE PROCEDURE [dbo].[sppakPkgListDInsert]
   ,@PackingMark
   ,@DocumentNo
   ,@DocumentRevision
+  ,@SourcePkgNo
   )
   SET @Return_SerialNo = @SerialNo
   SET @Return_PkgNo = @PkgNo

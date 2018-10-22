@@ -19,9 +19,9 @@ CREATE TABLE [dbo].[PAK_SitePkgD](
 	[DocumentRevision] [nvarchar](10) NULL,
 	[PackTypeID] [int] NULL,
 	[PackingMark] [nvarchar](50) NULL,
-	[PackLength] [decimal](18, 2) NOT NULL,
-	[PackWidth] [decimal](18, 2) NOT NULL,
-	[PackHeight] [decimal](18, 2) NOT NULL,
+	[PackLength] [decimal](18, 4) NOT NULL,
+	[PackWidth] [decimal](18, 4) NOT NULL,
+	[PackHeight] [decimal](18, 4) NOT NULL,
 	[UOMPack] [int] NULL,
 	[Remarks] [nvarchar](100) NULL,
 	[DocumentReceived] [bit] NOT NULL,
@@ -31,6 +31,7 @@ CREATE TABLE [dbo].[PAK_SitePkgD](
 	[InventoryStatusID] [int] NULL,
 	[InventoryUpdatedOn] [datetime] NULL,
 	[InventoryUpdatedBy] [nvarchar](8) NULL,
+	[TotalWeight] [decimal](18, 4) NOT NULL,
  CONSTRAINT [PK_PAK_SitePkgD] PRIMARY KEY CLUSTERED 
 (
 	[ProjectID] ASC,
@@ -69,10 +70,10 @@ REFERENCES [dbo].[PAK_PakTypes] ([PackTypeID])
 GO
 ALTER TABLE [dbo].[PAK_SitePkgD] CHECK CONSTRAINT [FK_PAK_SitePkgD_PAKTypeID]
 GO
-ALTER TABLE [dbo].[PAK_SitePkgD]  WITH CHECK ADD  CONSTRAINT [FK_PAK_SitePkgD_PkgNo] FOREIGN KEY([SerialNo], [PkgNo])
+ALTER TABLE [dbo].[PAK_SitePkgD]  WITH NOCHECK ADD  CONSTRAINT [FK_PAK_SitePkgD_PkgNo] FOREIGN KEY([SerialNo], [PkgNo])
 REFERENCES [dbo].[PAK_PkgListH] ([SerialNo], [PkgNo])
 GO
-ALTER TABLE [dbo].[PAK_SitePkgD] CHECK CONSTRAINT [FK_PAK_SitePkgD_PkgNo]
+ALTER TABLE [dbo].[PAK_SitePkgD] NOCHECK CONSTRAINT [FK_PAK_SitePkgD_PkgNo]
 GO
 ALTER TABLE [dbo].[PAK_SitePkgD]  WITH CHECK ADD  CONSTRAINT [FK_PAK_SitePkgD_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[IDM_Projects] ([ProjectID])
@@ -118,4 +119,6 @@ GO
 ALTER TABLE [dbo].[PAK_SitePkgD] ADD  CONSTRAINT [DF_PAK_SitePkgD_NotFromPackingList]  DEFAULT ((0)) FOR [NotFromPackingList]
 GO
 ALTER TABLE [dbo].[PAK_SitePkgD] ADD  CONSTRAINT [DF_PAK_SitePkgD_OnlyPackageReceived]  DEFAULT ((1)) FOR [OnlyPackageReceived]
+GO
+ALTER TABLE [dbo].[PAK_SitePkgD] ADD  CONSTRAINT [DF_PAK_SitePkgD_PackHeight1]  DEFAULT ((0)) FOR [TotalWeight]
 GO

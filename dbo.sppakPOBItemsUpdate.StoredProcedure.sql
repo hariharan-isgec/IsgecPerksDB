@@ -56,6 +56,19 @@ CREATE PROCEDURE [dbo].[sppakPOBItemsUpdate]
   @Accepted Bit,
   @SupplierWeightPerUnit Decimal(18,4),
   @QualityClearedQty Decimal(18,4) = 0, 
+  @ItemReference NVarChar(200),
+  @SubItem NVarChar(9),
+  @SubItem2 NvarChar(150),
+  @SubItem3 NvarChar(150),
+  @SubItem4 NvarChar(150),
+  @QuantityDespatchedToPort Decimal(18,4),
+  @TotalWeightDespatchedToPort Decimal(18,4),
+  @QuantityReceivedAtPort Decimal(18,4) = 0, 
+  @TotalWeightReceivedAtPort Decimal(18,4) = 0, 
+  @QuantityDespatchedFromPort Decimal(18,4) = 0, 
+  @TotalWeightDespatchedfromPort Decimal(18,4) = 0, 
+  @QualityClearedQtyStage Decimal(18,4) = 0, 
+  @TotalWeight Decimal(18,4) = 0, 
   @RowCount int = null OUTPUT
   AS
   UPDATE [PAK_POBItems] SET 
@@ -107,6 +120,19 @@ CREATE PROCEDURE [dbo].[sppakPOBItemsUpdate]
   ,[Accepted] = @Accepted
   ,[SupplierWeightPerUnit] = @SupplierWeightPerUnit
   ,[QualityClearedQty] = @QualityClearedQty 
+  ,[ItemReference] = @ItemReference
+  ,[SubItem]=@SubItem
+  ,[SubItem2]=@SubItem2
+  ,[SubItem3]=@SubItem3
+  ,[SubItem4] = @SubItem4 
+  ,[QuantityReceivedAtPort] = @QuantityReceivedAtPort
+  ,[TotalWeightReceivedAtPort] = @TotalWeightReceivedAtPort
+  ,[QuantityDespatchedFromPort] = @QuantityDespatchedFromPort
+  ,[TotalWeightDespatchedfromPort] = @TotalWeightDespatchedfromPort
+  ,[QuantityDespatchedToPort] = @QuantityDespatchedtoPort
+  ,[TotalWeightDespatchedToPort] = @TotalWeightDespatchedToPort 
+  ,[QualityClearedQtyStage] = @QualityClearedQtyStage
+  ,[TotalWeight] = @TotalWeight
   WHERE
   [SerialNo] = @Original_SerialNo
   AND [BOMNo] = @Original_BOMNo

@@ -8,6 +8,10 @@ CREATE PROCEDURE [dbo].[sppakPkgListHUpdate]
   @Original_SerialNo Int, 
   @Original_PkgNo Int, 
   @SerialNo Int,
+  @ReceivedAtPortOn DateTime,
+  @ReceivedAtPortBy NVarChar(8),
+  @PortID Int,
+  @ProjectID NVarChar(6),
   @SupplierRefNo NVarChar(50),
   @TransporterID NVarChar(9),
   @TransporterName NVarChar(50),
@@ -16,17 +20,28 @@ CREATE PROCEDURE [dbo].[sppakPkgListHUpdate]
   @GRDate DateTime,
   @VRExecutionNo Int,
   @Remarks NVarChar(500),
-  @UOMTotalWeight Int,
+  @Additional2Info NVarChar(50),
   @TotalWeight Decimal(18,2),
   @StatusID Int,
-  @CreatedOn DateTime,
-  @Additional2Info NVarChar(50),
   @Additional1Info NVarChar(50),
+  @CreatedOn DateTime,
   @CreatedBy NVarChar(8),
+  @UOMTotalWeight Int,
+  @VRRaised Bit,
+  @VRRaisedOn DateTime,
+  @VRConverted Bit,
+  @VRConvertedOn DateTime,
+  @VRConvertedBy NVarChar(8),
+  @VRRequestNo Int,
+  @VRExecuted Bit,
   @RowCount int = null OUTPUT
   AS
   UPDATE [PAK_PkgListH] SET 
    [SerialNo] = @SerialNo
+  ,[ReceivedAtPortOn] = @ReceivedAtPortOn
+  ,[ReceivedAtPortBy] = @ReceivedAtPortBy
+  ,[PortID] = @PortID
+  ,[ProjectID] = @ProjectID
   ,[SupplierRefNo] = @SupplierRefNo
   ,[TransporterID] = @TransporterID
   ,[TransporterName] = @TransporterName
@@ -35,13 +50,20 @@ CREATE PROCEDURE [dbo].[sppakPkgListHUpdate]
   ,[GRDate] = @GRDate
   ,[VRExecutionNo] = @VRExecutionNo
   ,[Remarks] = @Remarks
-  ,[UOMTotalWeight] = @UOMTotalWeight
+  ,[Additional2Info] = @Additional2Info
   ,[TotalWeight] = @TotalWeight
   ,[StatusID] = @StatusID
-  ,[CreatedOn] = @CreatedOn
-  ,[Additional2Info] = @Additional2Info
   ,[Additional1Info] = @Additional1Info
+  ,[CreatedOn] = @CreatedOn
   ,[CreatedBy] = @CreatedBy
+  ,[UOMTotalWeight] = @UOMTotalWeight
+  ,[VRRaised] = @VRRaised
+  ,[VRRaisedOn] = @VRRaisedOn
+  ,[VRConverted] = @VRConverted
+  ,[VRConvertedOn] = @VRConvertedOn
+  ,[VRConvertedBy] = @VRConvertedBy
+  ,[VRRequestNo] = @VRRequestNo
+  ,[VRExecuted] = @VRExecuted
   WHERE
   [SerialNo] = @Original_SerialNo
   AND [PkgNo] = @Original_PkgNo

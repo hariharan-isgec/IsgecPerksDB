@@ -63,10 +63,10 @@ REFERENCES [dbo].[PAK_ReceiveStatus] ([ReceiveStatusID])
 GO
 ALTER TABLE [dbo].[PAK_SitePkgH] CHECK CONSTRAINT [FK_PAK_SitePkgH_ReceiveStatusID]
 GO
-ALTER TABLE [dbo].[PAK_SitePkgH]  WITH CHECK ADD  CONSTRAINT [FK_PAK_SitePkgH_SerialNo] FOREIGN KEY([SerialNo])
+ALTER TABLE [dbo].[PAK_SitePkgH]  WITH NOCHECK ADD  CONSTRAINT [FK_PAK_SitePkgH_SerialNo] FOREIGN KEY([SerialNo])
 REFERENCES [dbo].[PAK_PO] ([SerialNo])
 GO
-ALTER TABLE [dbo].[PAK_SitePkgH] CHECK CONSTRAINT [FK_PAK_SitePkgH_SerialNo]
+ALTER TABLE [dbo].[PAK_SitePkgH] NOCHECK CONSTRAINT [FK_PAK_SitePkgH_SerialNo]
 GO
 ALTER TABLE [dbo].[PAK_SitePkgH]  WITH CHECK ADD  CONSTRAINT [FK_PAK_SitePkgH_SupplierID] FOREIGN KEY([SupplierID])
 REFERENCES [dbo].[VR_BusinessPartner] ([BPID])

@@ -53,6 +53,19 @@ CREATE TABLE [dbo].[PAK_POBItems](
 	[QuantityReceived] [decimal](18, 4) NOT NULL,
 	[TotalWeightReceived] [decimal](18, 4) NOT NULL,
 	[QualityClearedQty] [decimal](18, 4) NOT NULL,
+	[TotalWeight] [decimal](18, 4) NOT NULL,
+	[QuantityReceivedAtPort] [decimal](18, 4) NOT NULL,
+	[TotalWeightReceivedAtPort] [decimal](18, 4) NOT NULL,
+	[QuantityDespatchedFromPort] [decimal](18, 4) NOT NULL,
+	[TotalWeightDespatchedFromPort] [decimal](18, 4) NOT NULL,
+	[QuantityDespatchedToPort] [decimal](18, 4) NOT NULL,
+	[TotalWeightDespatchedToPort] [decimal](18, 4) NOT NULL,
+	[QualityClearedQtyStage] [decimal](18, 4) NOT NULL,
+	[ItemReference] [nvarchar](200) NULL,
+	[SubItem] [nvarchar](9) NULL,
+	[SubItem2] [nvarchar](150) NULL,
+	[SubItem3] [nvarchar](150) NULL,
+	[SubItem4] [nvarchar](150) NULL,
  CONSTRAINT [PK_PAK_POBItems] PRIMARY KEY CLUSTERED 
 (
 	[SerialNo] ASC,
@@ -183,4 +196,20 @@ GO
 ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_Quantity6]  DEFAULT ((0)) FOR [TotalWeightReceived]
 GO
 ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty]  DEFAULT ((0)) FOR [QualityClearedQty]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty1]  DEFAULT ((0)) FOR [TotalWeight]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty2]  DEFAULT ((0)) FOR [QuantityReceivedAtPort]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty3]  DEFAULT ((0)) FOR [TotalWeightReceivedAtPort]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty4]  DEFAULT ((0)) FOR [QuantityDespatchedFromPort]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty5]  DEFAULT ((0)) FOR [TotalWeightDespatchedFromPort]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty6]  DEFAULT ((0)) FOR [QuantityDespatchedToPort]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty7]  DEFAULT ((0)) FOR [TotalWeightDespatchedToPort]
+GO
+ALTER TABLE [dbo].[PAK_POBItems] ADD  CONSTRAINT [DF_PAK_POBItems_QualityClearedQty8]  DEFAULT ((0)) FOR [QualityClearedQtyStage]
 GO

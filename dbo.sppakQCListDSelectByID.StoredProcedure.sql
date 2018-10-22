@@ -19,7 +19,8 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectByID]
     [PAK_POBOM4].[ItemDescription] AS PAK_POBOM4_ItemDescription,
     [PAK_QCListH5].[SupplierRef] AS PAK_QCListH5_SupplierRef,
     [PAK_Units6].[Description] AS PAK_Units6_Description,
-    [PAK_Units7].[Description] AS PAK_Units7_Description 
+    [PAK_Units7].[Description] AS PAK_Units7_Description,
+    [QCM_InspectionStages8].[Description] AS QCM_InspectionStages8_Description 
   FROM [PAK_QCListD] 
   LEFT OUTER JOIN [aspnet_users] AS [aspnet_users1]
     ON [PAK_QCListD].[ClearedBy] = [aspnet_users1].[LoginID]
@@ -39,6 +40,8 @@ CREATE PROCEDURE [dbo].[sppakQCListDSelectByID]
     ON [PAK_QCListD].[UOMQuantity] = [PAK_Units6].[UnitID]
   LEFT OUTER JOIN [PAK_Units] AS [PAK_Units7]
     ON [PAK_QCListD].[UOMWeight] = [PAK_Units7].[UnitID]
+  LEFT OUTER JOIN [QCM_InspectionStages] AS [QCM_InspectionStages8]
+    ON [PAK_QCListD].[InspectionStageID] = [QCM_InspectionStages8].[InspectionStageID]
   WHERE
   [PAK_QCListD].[SerialNo] = @SerialNo
   AND [PAK_QCListD].[QCLNo] = @QCLNo

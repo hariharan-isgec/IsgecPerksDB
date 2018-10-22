@@ -6,19 +6,20 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[sppakQCListDInsert]
   @SerialNo Int,
+  @TotalWeight Decimal(18,4),
+  @QualityClearedWt Decimal(18,4),
+  @InspectionStageID Int,
   @QCLNo Int,
   @BOMNo Int,
   @ItemNo Int,
   @UOMQuantity Int,
   @Quantity Decimal(18,4),
-  @UOMWeight Int,
-  @WeightPerUnit Decimal(18,4),
-  @TotalWeight Decimal(18,4),
-  @QualityClearedWt Decimal(18,4),
-  @QualityClearedQty Decimal(18,4),
-  @Remarks NVarChar(500),
-  @ClearedBy NVarChar(8),
   @ClearedOn DateTime,
+  @WeightPerUnit Decimal(18,4),
+  @QualityClearedQty Decimal(18,4),
+  @UOMWeight Int,
+  @ClearedBy NVarChar(8),
+  @Remarks NVarChar(500),
   @Return_SerialNo Int = null OUTPUT, 
   @Return_QCLNo Int = null OUTPUT, 
   @Return_BOMNo Int = null OUTPUT, 
@@ -27,36 +28,38 @@ CREATE PROCEDURE [dbo].[sppakQCListDInsert]
   INSERT [PAK_QCListD]
   (
    [SerialNo]
+  ,[TotalWeight]
+  ,[QualityClearedWt]
+  ,[InspectionStageID]
   ,[QCLNo]
   ,[BOMNo]
   ,[ItemNo]
   ,[UOMQuantity]
   ,[Quantity]
-  ,[UOMWeight]
+  ,[ClearedOn]
   ,[WeightPerUnit]
   ,[QualityClearedQty]
-  ,[Remarks]
+  ,[UOMWeight]
   ,[ClearedBy]
-  ,[ClearedOn]
-  ,[TotalWeight]
-  ,[QualityClearedWt]
+  ,[Remarks]
   )
   VALUES
   (
    @SerialNo
+  ,@TotalWeight
+  ,@QualityClearedWt
+  ,@InspectionStageID
   ,@QCLNo
   ,@BOMNo
   ,@ItemNo
   ,@UOMQuantity
   ,@Quantity
-  ,@UOMWeight
+  ,@ClearedOn
   ,@WeightPerUnit
   ,@QualityClearedQty
-  ,@Remarks
+  ,@UOMWeight
   ,@ClearedBy
-  ,@ClearedOn
-  ,@TotalWeight
-  ,@QualityClearedWt
+  ,@Remarks
   )
   SET @Return_SerialNo = @SerialNo
   SET @Return_QCLNo = @QCLNo

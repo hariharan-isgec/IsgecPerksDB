@@ -38,10 +38,10 @@ REFERENCES [dbo].[PAK_SiteLocations] ([LocationID])
 GO
 ALTER TABLE [dbo].[PAK_SitePkgDLocation] CHECK CONSTRAINT [FK_PAK_SitePkgDLocation_LocationID]
 GO
-ALTER TABLE [dbo].[PAK_SitePkgDLocation]  WITH CHECK ADD  CONSTRAINT [FK_PAK_SitePkgDLocation_PkgNo] FOREIGN KEY([SerialNo], [PkgNo])
+ALTER TABLE [dbo].[PAK_SitePkgDLocation]  WITH NOCHECK ADD  CONSTRAINT [FK_PAK_SitePkgDLocation_PkgNo] FOREIGN KEY([SerialNo], [PkgNo])
 REFERENCES [dbo].[PAK_PkgListH] ([SerialNo], [PkgNo])
 GO
-ALTER TABLE [dbo].[PAK_SitePkgDLocation] CHECK CONSTRAINT [FK_PAK_SitePkgDLocation_PkgNo]
+ALTER TABLE [dbo].[PAK_SitePkgDLocation] NOCHECK CONSTRAINT [FK_PAK_SitePkgDLocation_PkgNo]
 GO
 ALTER TABLE [dbo].[PAK_SitePkgDLocation]  WITH CHECK ADD  CONSTRAINT [FK_PAK_SitePkgDLocation_ProjectID] FOREIGN KEY([ProjectID])
 REFERENCES [dbo].[IDM_Projects] ([ProjectID])

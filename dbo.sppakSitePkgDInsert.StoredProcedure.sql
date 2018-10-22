@@ -8,13 +8,13 @@ CREATE PROCEDURE [dbo].[sppakSitePkgDInsert]
   @ItemNo Int,
   @SiteMarkNo NVarChar(30),
   @UOMQuantity Int,
-  @Quantity Decimal(18,2),
+  @Quantity Decimal(18,4),
   @PackTypeID Int,
   @OnlyPackageReceived Bit,
   @InventoryStatusID Int,
   @Remarks NVarChar(100),
   @DocumentReceived Bit,
-  @PackHeight Decimal(18,2),
+  @PackHeight Decimal(18,4),
   @UOMPack Int,
   @InventoryUpdatedBy NVarChar(8),
   @InventoryUpdatedOn DateTime,
@@ -25,11 +25,12 @@ CREATE PROCEDURE [dbo].[sppakSitePkgDInsert]
   @PkgNo Int,
   @RecNo Int,
   @SerialNo Int,
-  @PackLength Decimal(18,2),
-  @PackWidth Decimal(18,2),
+  @PackLength Decimal(18,4),
+  @PackWidth Decimal(18,4),
   @PackingMark NVarChar(50),
   @DocumentRevision NVarChar(10),
   @ProjectID NVarChar(6),
+  @TotalWeight Decimal(18,4),
   @Return_ProjectID NVarChar(6) = null OUTPUT, 
   @Return_RecNo Int = null OUTPUT, 
   @Return_RecSrNo Int = null OUTPUT 
@@ -61,6 +62,7 @@ CREATE PROCEDURE [dbo].[sppakSitePkgDInsert]
   ,[PackingMark]
   ,[DocumentRevision]
   ,[ProjectID]
+  ,[TotalWeight]
   )
   VALUES
   (
@@ -89,6 +91,7 @@ CREATE PROCEDURE [dbo].[sppakSitePkgDInsert]
   ,@PackingMark
   ,@DocumentRevision
   ,UPPER(@ProjectID)
+  ,@TotalWeight
   )
   SET @Return_ProjectID = @ProjectID
   SET @Return_RecNo = @RecNo

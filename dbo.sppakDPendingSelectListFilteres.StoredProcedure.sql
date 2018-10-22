@@ -37,9 +37,9 @@ CREATE PROCEDURE [dbo].[sppakDPendingSelectListFilteres]
   SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [PAK_PakTypes] AS [PAK_PakTypes1]'
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListD].[PackTypeID] = [PAK_PakTypes1].[PackTypeID]'
   SET @LGSQL = @LGSQL + '  INNER JOIN [PAK_PkgListH] AS [PAK_PkgListH2]'
-  SET @LGSQL = @LGSQL + '    ON [PAK_PkgListD].[SerialNo] = [PAK_PkgListH2].[SerialNo]'
-  SET @LGSQL = @LGSQL + '    AND [PAK_PkgListD].[PkgNo] = [PAK_PkgListH2].[PkgNo]'
-  SET @LGSQL = @LGSQL + '  INNER JOIN [PAK_PO] AS [PAK_PO3]'
+  --SET @LGSQL = @LGSQL + '    ON [PAK_PkgListD].[SerialNo] = [PAK_PkgListH2].[SerialNo]'
+  SET @LGSQL = @LGSQL + '    ON [PAK_PkgListD].[PkgNo] = [PAK_PkgListH2].[PkgNo]'
+  SET @LGSQL = @LGSQL + '  LEFT OUTER JOIN [PAK_PO] AS [PAK_PO3]'
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListD].[SerialNo] = [PAK_PO3].[SerialNo]'
   SET @LGSQL = @LGSQL + '  INNER JOIN [PAK_POBItems] AS [PAK_POBItems4]'
   SET @LGSQL = @LGSQL + '    ON [PAK_PkgListD].[SerialNo] = [PAK_POBItems4].[SerialNo]'
@@ -140,8 +140,8 @@ CREATE PROCEDURE [dbo].[sppakDPendingSelectListFilteres]
   LEFT OUTER JOIN [PAK_PakTypes] AS [PAK_PakTypes1]
     ON [PAK_PkgListD].[PackTypeID] = [PAK_PakTypes1].[PackTypeID]
   INNER JOIN [PAK_PkgListH] AS [PAK_PkgListH2]
-    ON [PAK_PkgListD].[SerialNo] = [PAK_PkgListH2].[SerialNo]
-    AND [PAK_PkgListD].[PkgNo] = [PAK_PkgListH2].[PkgNo]
+    --ON [PAK_PkgListD].[SerialNo] = [PAK_PkgListH2].[SerialNo]
+    ON [PAK_PkgListD].[PkgNo] = [PAK_PkgListH2].[PkgNo]
   INNER JOIN [PAK_PO] AS [PAK_PO3]
     ON [PAK_PkgListD].[SerialNo] = [PAK_PO3].[SerialNo]
   INNER JOIN [PAK_POBItems] AS [PAK_POBItems4]

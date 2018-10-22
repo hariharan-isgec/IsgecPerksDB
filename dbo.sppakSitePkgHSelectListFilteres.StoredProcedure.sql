@@ -125,7 +125,7 @@ CREATE PROCEDURE [dbo].[sppakSitePkgHSelectListFilteres]
                         WHEN 'VR_LorryReceipts9_TransporterName DESC' THEN '[VR_LorryReceipts9].[TransporterName] DESC'
                         WHEN 'VR_MaterialStates10_Description' THEN '[VR_MaterialStates10].[Description]'
                         WHEN 'VR_MaterialStates10_Description DESC' THEN '[VR_MaterialStates10].[Description] DESC'
-                        ELSE '[PAK_SitePkgH].[ProjectID],[PAK_SitePkgH].[RecNo]'
+                        ELSE '[PAK_SitePkgH].[RecNo] DESC'
                     END
   EXEC (@LGSQL)
 

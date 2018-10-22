@@ -29,6 +29,9 @@ CREATE PROCEDURE [dbo].[sppakPOUpdate]
   @QCRequired Bit = 0,
   @AcceptedBySupplier Bit = 0,
   @AcceptedBySupplierOn DateTime = NULL,
+  @POWeight Decimal(18,4) = 0,
+  @PortRequired Bit = 0,
+  @PortID Int,
   @RowCount int = null OUTPUT
   AS
   UPDATE [PAK_PO] SET 
@@ -55,6 +58,9 @@ CREATE PROCEDURE [dbo].[sppakPOUpdate]
   ,[QCRequired] = @QCRequired  
   ,[AcceptedBySupplier] = @AcceptedBySupplier
   ,[AcceptedBySupplierOn] = @AcceptedBySupplierOn 
+  ,[POWeight] = @POWeight 
+  ,[PortRequired] = @PortRequired
+  ,[PortID] = @PortID
   WHERE
   [SerialNo] = @Original_SerialNo
   SET @RowCount = @@RowCount
